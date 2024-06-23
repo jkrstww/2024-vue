@@ -125,7 +125,7 @@ export default {
             smooth: true
           }
         ]
-      };
+      }
       div.setOption(option)
     },
     valueChange (value) {
