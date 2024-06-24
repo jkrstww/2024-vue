@@ -1,9 +1,9 @@
 <template>
   <el-dialog
-      title="提示"
+      title="值班信息查看"
       :visible.sync="dialogVisible"
       width="30%">
-    <span>这是一段信息</span>
+    <el-calendar v-model="value" :marked="markedDates"></el-calendar>
     <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -16,11 +16,13 @@ export default {
   name: 'DutyStatusDialog',
   data: function () {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      value: new Date(),
+      markedDates: []
     }
   },
   methods: {
-    show () {
+    show (user) {
       this.dialogVisible = true
     }
   }
@@ -29,5 +31,7 @@ export default {
 </script>
 
 <style scoped>
-
+.marked-date {
+  color: green;
+}
 </style>
