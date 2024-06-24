@@ -21,19 +21,26 @@
       <div :class="active === 2 ? 'form' : 'form hidden'">
         <div class="title">开始</div>
         <div class="subtitle">创建你的账户</div>
-        <div class="inputf">
-          <input type="text" placeholder="学号" />
-          <span class="label">学号</span>
-        </div>
-        <div class="inputf">
-          <input type="text" placeholder="联系方式" />
-          <span class="label">联系方式</span>
-        </div>
-        <div class="inputf">
-          <input type="text" placeholder="密码" />
-          <span class="label">密码</span>
-        </div>
-        <button>注册</button>
+        <el-form :model="registerForm"
+                 ref="registerForm"
+                 label-width="0"
+                 label-position="left"
+                 style="width: 100%"
+                 class="registerForm">
+          <el-form-item prop="sn">
+            <el-input type="text" v-model.number="registerForm.sn" placeholder="请输入学号" prefix-icon="el-icon-user"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input type="password" v-model="registerForm.password" autocomplete="off" placeholder="请输入密码" prefix-icon="el-icon-lock"></el-input>
+          </el-form-item>
+          <el-form-item prop="checkPass">
+            <el-input type="password" v-model="registerForm.checkPass" autocomplete="off" placeholder="请确认密码" prefix-icon="el-icon-lock"></el-input>
+          </el-form-item>
+          <el-form-item prop="phoneNumber">
+            <el-input type="text" v-model.number="registerForm.phoneNumber" placeholder="请输入联系方式" prefix-icon="el-icon-phone-outline"></el-input>
+          </el-form-item>
+        </el-form>
+        <button @click="registerBtn">注册</button>
       </div>
       <div :class="active === 1 ? 'card' : 'card active'">
         <div class="head">
@@ -52,15 +59,79 @@
 </template>
 
 <script>
-import {login} from '@api/api'
+import {login, register} from '@api/api'
 export default {
   data () {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.registerForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass')
+        }
+        callback()
+      }
+    }
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.registerForm.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
+    var checkSN = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('学号不能为空'))
+      }
+      setTimeout(() => {
+        console.log(typeof value)
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字'))
+        } else {
+          callback()
+        }
+      }, 100)
+    }
+    var checkPhoneNumber = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('联系方式不能为空'))
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字'))
+        } else {
+          callback()
+        }
+      }, 100)
+    }
     return {
       loginForm: {
         sn: '',
         password: ''
       },
-      active: 1
+      active: 1,
+      registerForm: {
+        sn: '',
+        password: '',
+        checkPass: '',
+        phoneNumber: ''
+      },
+      rules: {
+        password: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+        sn: [
+          { validator: checkSN, trigger: 'blur' }
+        ],
+        phoneNumber: [
+          { validator: checkPhoneNumber, trigger: 'blur' }
+        ]
+      }
     }
   },
   methods: {
@@ -79,6 +150,16 @@ export default {
           this.$router.push('/main')
         }
         console.info(res)
+      })
+    },
+    registerBtn () {
+      register(this.registerForm).then(res => {
+        if (res.data) {
+          this.$message({
+            message: '注册成功！',
+            type: 'success'
+          })
+        }
       })
     }
   }
@@ -119,7 +200,7 @@ export default {
     padding: 40px 60px;
     box-shadow: rgba(50,50,93,0.25) 50px 50px 100px -20px,
     rgba(0,0,0,0.5) 30px 30px 60px -30px,
-    rgba(217,217,222,0.35) 2px -2px 6px 0;
+    rgba(217,217,222,0.35) 2px -2px 6px 0px;
     display: flex;
     position: relative;
     justify-content: center;
@@ -208,6 +289,9 @@ export default {
       font-size: 12px;
       cursor: pointer;
     }
+    /*.el-form.el-form-item.el-input /deep/ .el-input__inner {
+      background-color: transparent !important;
+    }*/
   }
   .card{
     position: absolute;

@@ -10,3 +10,5 @@ export const updateUser = data => http.POST('/api/whitelistSetting/updateById', 
 export const removeById = data => http.GET('/api/whitelistSetting/deleteById', data)
 // 批量删除
 export const removeByIds = data => http.POST('/api/whitelistSetting/deleteByIds', data)
+
+export const register = data => http.POST('/api/whitelistSetting/register', data)
