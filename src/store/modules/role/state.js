@@ -4,16 +4,16 @@ export default {
       roleName: '学生'
     },
     2: {
-      roleName: '学校用户'
+      roleName: '中心管理员'
     },
     3: {
-      roleName: '学院用户'
+      roleName: '初访员'
     },
     4: {
-      roleName: '辅导员'
+      roleName: '咨询师'
     },
     5: {
-      roleName: '超管'
+      roleName: '心理助理'
     }
   }
 }

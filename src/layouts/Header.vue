@@ -2,39 +2,39 @@
   <div class="header">
     <div class="header-left">
       <a
-        href="javascript:;"
+        href="javascript:"
         class="header-icon"
         @click="collapseTrigger"
         role="button"
       >
         <s-icon
-          v-if="collapse"
-          icon="suncaper-menu-fold"
+            v-if="collapse"
+            icon="el-icon-s-fold"
         />
         <s-icon
-          v-else
-          icon="suncaper-menu-unfold"
+            v-else
+            icon="el-icon-s-unfold"
         />
       </a>
       <span class="header-title text-center">欢迎您，{{userName}} {{roleName}}</span>
     </div>
     <div class="header-right">
       <s-icon
-        icon="suncaper-user"
+        icon="el-icon-user-solid"
         class="text-center"
       />
       <span class="text-center" >
           {{userName}}
         </span>
       <a
-        href="javascript:;"
+        href="javascript:"
         class="header-logout"
         @click="logout"
         role="button"
       >
         <s-tooltip effect="dark" content="退出" placement="bottom">
           <s-icon
-            icon="suncaper-quit"
+            icon="el-icon-switch-button"
           />
         </s-tooltip>
       </a>

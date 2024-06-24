@@ -36,20 +36,52 @@ const mainPage = [
             )
       },
       {
-        path: 'userList',
-        name: 'userList',
+        path: 'config/dutyManage',
+        name: 'dutyManage',
         component: () =>
-            import(
-              /* webpackChunkName: "First" */ '../pages/main/routes/user/list'
-            )
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/config/DutyManage.vue'
+          )
       },
       {
-        path: 'userStat',
-        name: 'userStat',
+        path: 'config/timeConfig',
+        name: 'timeConfig',
         component: () =>
-            import(
-              /* webpackChunkName: "First" */ '../pages/main/routes/user/stat'
-            )
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/config/TimeConfig.vue'
+          )
+      },
+      {
+        path: 'config/basicInfo',
+        name: 'basicInfo',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/config/BasicInfoMaintain.vue'
+          )
+      },
+      {
+        path: 'config/statistic',
+        name: 'Statistic',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/config/Statistic.vue'
+          )
+      },
+      {
+        path: 'firstVisit/review',
+        name: 'review',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/firstVisit/AppointmentReview.vue'
+          )
+      },
+      {
+        path: 'firstVisit/record',
+        name: 'record',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/firstVisit/ReservationRecord.vue'
+          )
       },
       {
         path: 'whiteList',

@@ -10,7 +10,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import Layout from '@/layouts/Layout'
-import logo from '@/assets/images/logo.png'
+import logo from '@/assets/images/scu.png'
 
 export default {
   name: 'Main',
@@ -19,8 +19,8 @@ export default {
       logo: {
         src: logo,
         alt: '上程数据',
-        firstDes: '上程数据',
-        secondDes: '广泛UE模板'
+        firstDes: '四川大学',
+        secondDes: '心理咨询平台'
       }
     }
   },

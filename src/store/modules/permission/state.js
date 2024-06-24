@@ -5,7 +5,7 @@ export default {
       main: ['*']
     },
     2: {
-      main: ['whiteList']
+      main: ['*']
     },
     3: {
       main: ['*']
