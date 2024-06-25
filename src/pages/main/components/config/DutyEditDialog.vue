@@ -36,13 +36,13 @@
       <el-form-item label="是否值班">
         <el-switch v-model="form.onDuty"></el-switch>
       </el-form-item>
-      <div class="block">
-        <span class="demonstration">折叠展示Tag</span>
-        <el-cascader
-            :options="options"
-            props.multiple = true
-            collapse-tags></el-cascader>
-      </div>
+      <!--      <div class="block">
+              <span class="demonstration">折叠展示Tag</span>
+              <el-cascader
+                  :options="options"
+                  props.multiple = true
+                  collapse-tags></el-cascader>
+            </div>-->
 
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -67,8 +67,8 @@ export default {
         name: '',
         workplace: '',
         onDuty: ''
-      },
-      props: { multiple: true },
+      }
+      /* props: { multiple: true },
       options: [{
         value: 1,
         label: '东南',
@@ -115,7 +115,7 @@ export default {
             { value: 23, label: '克拉玛依' }
           ]
         }]
-      }]
+      }] */
     }
   },
   methods: {
@@ -129,7 +129,6 @@ export default {
           case '3': return '周三'
           case '4': return '周四'
           case '5': return '周五'
-          default: return ''
         }
       })
       this.dialogVisible = true
@@ -142,7 +141,6 @@ export default {
           case '周三': return 3
           case '周四': return 4
           case '周五': return 5
-          default: return 0
         }
       })
       this.form.workDay = workDayNumber.join(',')

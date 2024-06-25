@@ -46,6 +46,7 @@
             prop="onDuty"
             label="值班状态">
           <template slot-scope="scope">
+            <span :style="{color: scope.row.onDuty ? '#00FA9A' : '#FF8C00', fontSize: '20px'}">&#9679;</span>
             {{ scope.row.onDuty ? '值班中' : '未值班' }}
           </template>
         </el-table-column>
