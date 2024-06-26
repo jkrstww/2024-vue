@@ -84,6 +84,14 @@ const mainPage = [
           )
       },
       {
+        path: 'firstVisitor',
+        name: 'firstVisitor',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/firstVisitor/Conclusion.vue'
+          )
+      },
+      {
         path: 'whiteList',
         name: 'whiteList',
         component: () =>

@@ -3,28 +3,46 @@ export default {
     1: {
       main: [
         {
-          groupTitle: '分组1'
-        },
-        {
-          path: '/main/first',
-          icon: 'el-icon-goods',
-          title: '一级菜单1'
-        },
-        {
-          path: '/main/first',
-          icon: 'el-icon-circle-plus',
-          title: '哈哈哈哈哈'
+          groupTitle: '菜单'
         },
         {
           path: '/main/second',
-          icon: 'el-icon-setting',
-          title: '一级菜单2',
+          icon: 'suncaper-menu-unfold',
+          title: '初访',
           group: 'second',
           children: [
             {
               path: '/main/second/second',
-              icon: 'el-icon-video-camera-solid',
-              title: '二级菜单'
+              icon: 'suncaper-menu-unfold',
+              title: '初访预约'
+            },
+            {
+              path: '/main/firstVisit/record',
+              icon: 'el-icon-s-order',
+              title: '预约记录'
+            }
+          ]
+        },
+        {
+          path: '/main/second',
+          icon: 'suncaper-menu-unfold',
+          title: '咨询',
+          group: 'third',
+          children: [
+            {
+              path: '/main/second/second',
+              icon: 'suncaper-menu-unfold',
+              title: '咨询预约'
+            },
+            {
+              path: '/main/firstVisit/record',
+              icon: 'el-icon-s-order',
+              title: '预约记录'
+            },
+            {
+              path: '/main/firstVisit/record',
+              icon: 'el-icon-s-order',
+              title: '咨询结果'
             }
           ]
         }
@@ -33,9 +51,7 @@ export default {
     2: {
       main: [
         {
-          path: '/main/first',
-          icon: 'el-icon-s-unfold',
-          title: '中心管理'
+          groupTitle: '菜单'
         },
         {
           path: '/main/config',
@@ -82,6 +98,18 @@ export default {
               title: '预约记录'
             }
           ]
+        }
+      ]
+    },
+    3: {
+      main: [
+        {
+          groupTitle: '菜单'
+        },
+        {
+          path: '/main/firstVisitor',
+          icon: 'el-icon-s-order',
+          title: '初访结论'
         }
       ]
     }
