@@ -6,14 +6,19 @@ export default {
           groupTitle: '菜单'
         },
         {
+          path: '/main/config/studentInfo',
+          icon: 'el-icon-s-order',
+          title: '修改个人信息'
+        },
+        {
           path: '/main/second',
-          icon: 'suncaper-menu-unfold',
+          icon: 'el-icon-price-tag',
           title: '初访',
           group: 'second',
           children: [
             {
-              path: '/main/second/second',
-              icon: 'suncaper-menu-unfold',
+              path: '/main/firstVisit/appointment',
+              icon: 'el-icon-circle-check',
               title: '初访预约'
             },
             {
@@ -25,13 +30,13 @@ export default {
         },
         {
           path: '/main/second',
-          icon: 'suncaper-menu-unfold',
+          icon: 'el-icon-s-custom',
           title: '咨询',
           group: 'third',
           children: [
             {
               path: '/main/second/second',
-              icon: 'suncaper-menu-unfold',
+              icon: 'el-icon-circle-check',
               title: '咨询预约'
             },
             {

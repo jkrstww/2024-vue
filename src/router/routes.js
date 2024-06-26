@@ -7,7 +7,6 @@ const loginPage = [
   }
 ]
 
-// 一定是需要登陆访问的
 const mainPage = [
   {
     path: '/',
@@ -23,17 +22,17 @@ const mainPage = [
         path: 'first',
         name: 'first',
         component: () =>
-            import(
-              /* webpackChunkName: "Second" */ '../pages/main/routes/first/First'
-            )
+          import(
+            /* webpackChunkName: "Second" */ '../pages/main/routes/first/First'
+          )
       },
       {
         path: 'second/second',
         name: 'second',
         component: () =>
-            import(
-              /* webpackChunkName: "First" */ '../pages/main/routes/second/Second'
-            )
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/second/Second'
+          )
       },
       {
         path: 'config/dutyManage',
@@ -81,6 +80,22 @@ const mainPage = [
         component: () =>
           import(
             /* webpackChunkName: "First" */ '../pages/main/routes/firstVisit/ReservationRecord.vue'
+          )
+      },
+      {
+        path: 'firstVisit/appointment',
+        name: 'appointment',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/firstVisit/Appointment.vue'
+          )
+      },
+      {
+        path: 'config/studentInfo',
+        name: 'studentInfo',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/config/StudentInfo.vue'
           )
       },
       {
