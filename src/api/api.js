@@ -13,6 +13,12 @@ export const removeByIds = data => http.POST('/api/whitelistSetting/deleteByIds'
 
 export const register = data => http.POST('/api/whitelistSetting/register', data)
 
+export const addUser = data => http.POST('/api/whitelistSetting/add', data)
+
+export const getVisitRecords = data => http.POST('/api/visitRecord/getMyList', data)
+
+export const getVisitRecordsPage = data => http.POST('/api/visitRecord/getMyList', data)
+
 export const pageVisitList = data => http.GET('/api/visitRecord/visitPageList', data)
 
 export const updateVisit = data => http.POST('/api/visitRecord/updateById', data)
