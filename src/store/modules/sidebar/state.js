@@ -117,6 +117,61 @@ export default {
           title: '初访结论'
         }
       ]
+    },
+    4: {
+      main: [
+        {
+          groupTitle: '菜单'
+        },
+        {
+          path: '/main/consultation',
+          icon: 'el-icon-user-solid',
+          title: '咨询管理',
+          group: 'second',
+          children: [
+            {
+              path: '/main/consultation/record',
+              icon: 'el-icon-s-order',
+              title: '咨询记录'
+            },
+            {
+              path: '/main/consultation/additional',
+              icon: 'el-icon-upload2',
+              title: '追加时段'
+            },
+            {
+              path: '/main/consultation/finalReport',
+              icon: 'el-icon-circle-check',
+              title: '结案报告'
+            }
+          ]
+        }
+      ]
+    },
+    5: {
+      main: [
+        {
+          groupTitle: '菜单'
+        },
+        {
+          path: '/main/consultation',
+          icon: 'el-icon-user-solid',
+          title: '咨询管理',
+          group: 'second',
+          children: [
+            {
+              path: '/main/consultation/appointmentReview',
+              icon: 'el-icon-circle-check',
+              title: '预约审核'
+            },
+            {
+              path: '/main/consultation/arrangementRecord',
+              icon: 'el-icon-s-order',
+              title: '安排记录'
+            }
+          ]
+        }
+      ]
     }
   },
   sidebarTheme: {
