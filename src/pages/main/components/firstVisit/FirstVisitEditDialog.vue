@@ -62,11 +62,15 @@ export default {
     },
     submit () {
       updateVisit(this.form).then(res => {
-        this.$message({
-          message: '修改成功',
-          type: 'success'
-        })
+        if (res.data) {
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          })
+        }
         this.dialogVisible = false
+
+        this.$emit('ok')
       })
     }
   }
