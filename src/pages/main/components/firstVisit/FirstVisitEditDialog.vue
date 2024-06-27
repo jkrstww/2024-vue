@@ -32,7 +32,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="submit">确 定</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import {updateVisit} from '@api/api'
+
 export default {
   name: 'FirstVisitEditDialog',
   data () {
@@ -57,6 +59,15 @@ export default {
     show (students) {
       this.dialogVisible = true
       this.form = JSON.parse(JSON.stringify(students))
+    },
+    submit () {
+      updateVisit(this.form).then(res => {
+        this.$message({
+          message: '修改成功',
+          type: 'success'
+        })
+        this.dialogVisible = false
+      })
     }
   }
 }

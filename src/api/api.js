@@ -12,3 +12,7 @@ export const removeById = data => http.GET('/api/whitelistSetting/deleteById', d
 export const removeByIds = data => http.POST('/api/whitelistSetting/deleteByIds', data)
 
 export const register = data => http.POST('/api/whitelistSetting/register', data)
+
+export const pageVisitList = data => http.GET('/api/visitRecord/visitPageList', data)
+
+export const updateVisit = data => http.POST('/api/visitRecord/updateById', data)
