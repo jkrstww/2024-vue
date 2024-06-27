@@ -65,7 +65,8 @@ export default {
       name: '',
       totals: 0,
       pageNo: 1,
-      pageSize: 10
+      pageSize: 10,
+      isApproved: false
     }
   },
   components: {
@@ -77,7 +78,8 @@ export default {
         sn: this.sn,
         name: this.name,
         pageNo: this.pageNo,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        isApproved: false
       }
       pageConsultList(obj).then(res => {
         this.appointment = res.data.records

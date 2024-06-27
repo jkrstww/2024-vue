@@ -9,7 +9,7 @@
         <el-form ref="form" label-width="80px">
           <el-form-item label="咨询老师">
             <el-select v-model="form.selectedTeacher" placeholder="请选择咨询老师">
-<!-- 展示在“值班状态”的老师--><!--绑定v-model希望显示的是一个字符串，但此时form.name是一个数组，所以需要重新设置一个变量selectedTeacher来绑定-->
+              <!-- 展示在“值班状态”的老师--><!--绑定v-model希望显示的是一个字符串，但此时form.name是一个数组，所以需要重新设置一个变量selectedTeacher来绑定-->
               <el-option
                   v-for="(teacher, index) in form.name"
                   :key="index"
@@ -48,7 +48,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="submit">确 定</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import {pageUserList} from '@api/api' // 这里修改为老师的表单即可
+import {pageUserList, updateConsult} from '@api/api' // 这里的pageUserList修改为老师的表单即可，另外需要一个接口更新咨询申请的状态
 export default {
   name: 'AppointmentEditDialog',
   data () {
@@ -107,20 +107,30 @@ export default {
     },
     handleWorkDayChange (day) {
       this.form.workDay = day
+    },
+    submit () {
+      if (!this.form.selectedTeacher || !this.form.selectedWorkDay || !this.form.workplace || !this.form.period) {
+        this.$message({
+          message: '请填写所有的字段',
+          type: 'warning'
+        })
+        return
+      }
+
+      this.isApproved = true
+      updateConsult(this.form).then(res => {
+        if (res.data) {
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          })
+          this.dialogVisible = false
+          this.$emit('ok')
+          this.getAppointments()
+        }
+      })
+      this.dialogVisible = false
     }
-    // submit () {
-    //   updateVisit(this.form).then(res => {
-    //     if (res.data) {
-    //       this.$message({
-    //         message: '修改成功',
-    //         type: 'success'
-    //       })
-    //     }
-    //     this.dialogVisible = false
-    //
-    //     this.$emit('ok')
-    //   })
-    // }
   },
   watch: {
     'form.selectedTeacher': 'handleTeacherChange',
