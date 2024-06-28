@@ -19,7 +19,7 @@
           <el-input v-model="name" placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click = "getRecord">查询</el-button>
+          <el-button type="primary" @click = "getRecord" icon="el-icon-search">查询</el-button>
           <el-button type="info" @click = "recordEdit" icon="el-icon-upload">添加</el-button>
         </el-form-item>
       </el-form>
