@@ -29,7 +29,8 @@
             label="联系方式">
         </el-table-column>
         <el-table-column
-            fixed="right"
+            align="center"
+            header-align="center"
             label="操作"
             width="100">
           <template slot-scope="scope">
@@ -65,8 +66,7 @@ export default {
       name: '',
       totals: 0,
       pageNo: 1,
-      pageSize: 10,
-      isApproved: false
+      pageSize: 10
     }
   },
   components: {

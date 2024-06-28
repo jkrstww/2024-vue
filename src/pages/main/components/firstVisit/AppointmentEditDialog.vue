@@ -1,14 +1,14 @@
-<!--咨询预约通过按钮-->
+<!--初访结论编辑按钮-->
 <template>
   <div>
     <el-card class="container">
       <el-dialog
-          title="咨询预约"
+          title="初访预约"
           :visible.sync="dialogVisible"
           width="30%">
         <el-form ref="form" label-width="80px">
-          <el-form-item label="咨询老师">
-            <el-select v-model="form.selectedTeacher" placeholder="请选择咨询老师">
+          <el-form-item label="初访老师">
+            <el-select v-model="form.selectedVisitTeacher" placeholder="请选择咨询老师">
               <!-- 展示在“值班状态”的老师--><!--绑定v-model希望显示的是一个字符串，但此时form.name是一个数组，所以需要重新设置一个变量selectedTeacher来绑定-->
               <el-option
                   v-for="(teacher, index) in form.name"
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import {pageUserList, updateConsult} from '@api/api' // 这里的pageUserList修改为老师的表单即可，另外需要一个接口更新咨询申请的状态
+import {pageUserList, updateVisitRequest} from '@api/api' // 这里的pageUserList修改为老师的表单即可，另外需要一个接口更新咨询申请的状态
 export default {
   name: 'AppointmentEditDialog',
   data () {
@@ -69,7 +69,7 @@ export default {
         sn: '',
         onDuty: '',
         workplace: '',
-        selectedTeacher: '',
+        selectedVisitTeacher: '',
         period: ''
       }
     }
@@ -90,6 +90,7 @@ export default {
             workDays: workDays
           }
         })
+        this.$forceUpdate()
       })
     },
     getWeekDay (day) {
@@ -102,14 +103,14 @@ export default {
       }
     },
     handleTeacherChange () {
-      const selectedTeacher = this.form.name.find(teacher => teacher.value === this.form.selectedTeacher)
-      this.form.workDay = selectedTeacher ? selectedTeacher.workDays : []
+      const selectedVisitTeacher = this.form.name.find(teacher => teacher.value === this.form.selectedVisitTeacher)
+      this.form.workDay = selectedVisitTeacher ? selectedVisitTeacher.workDays : []
     },
     handleWorkDayChange (day) {
       this.form.workDay = day
     },
     submit () {
-      if (!this.form.selectedTeacher || !this.form.selectedWorkDay || !this.form.workplace || !this.form.period) {
+      if (!this.form.selectedVisitTeacher || !this.form.selectedWorkDay || !this.form.workplace || !this.form.period) {
         this.$message({
           message: '请填写所有的字段',
           type: 'warning'
@@ -118,7 +119,7 @@ export default {
       }
 
       this.isApproved = true
-      updateConsult(this.form).then(res => {
+      updateVisitRequest(this.form).then(res => {
         if (res.data) {
           this.$message({
             message: '修改成功',
@@ -133,7 +134,7 @@ export default {
     }
   },
   watch: {
-    'form.selectedTeacher': 'handleTeacherChange',
+    'form.selectedVisitTeacher': 'handleTeacherChange',
     'form.workDay': 'handleWorkDayChange'
   }
 }

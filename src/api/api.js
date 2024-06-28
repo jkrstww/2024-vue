@@ -12,7 +12,13 @@ export const removeById = data => http.GET('/api/whitelistSetting/deleteById', d
 export const removeByIds = data => http.POST('/api/whitelistSetting/deleteByIds', data)
 
 export const register = data => http.POST('/api/whitelistSetting/register', data)
-
+// 分页查询初访结果
 export const pageVisitList = data => http.GET('/api/visitRecord/visitPageList', data)
 
 export const updateVisit = data => http.POST('/api/visitRecord/updateById', data)
+// 分页查询咨询申请
+export const pageConsultList = data => http.GET('/api/consultRequest/consultPageList', data)
+
+export const updateConsult = data => http.POST('/api/consultRequest/updateById', data)
+
+export const pageVisitRequestList = data => http.GET('/api/visitRequest/visitRequestPageList', data)
