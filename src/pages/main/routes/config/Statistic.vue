@@ -11,14 +11,26 @@
       </div>
     </el-card>
     <el-card class="container">
-      {{title}}
+      <el-tabs style="margin-left: 20px">
+        <el-tab-pane label="结案报告" name="first">
+          <ReportDownload ref="reportDownload"></ReportDownload>
+        </el-tab-pane>
+
+        <el-tab-pane label="咨询师管理" name="second">
+          <ConsultTeacherExcel ref="consultTeacherExcel"></ConsultTeacherExcel>
+        </el-tab-pane>
+      </el-tabs>
     </el-card>
   </div>
 </template>
 
 <script>
+import ReportDownload from '../../components/config/ReportDownload.vue'
+import ConsultTeacherExcel from '../../components/config/ConsultTeacherExcel.vue'
+
 export default {
   name: 'dutyManage',
+  components: {ConsultTeacherExcel, ReportDownload},
   data () {
     return {
       title: '统计分析'
