@@ -32,3 +32,9 @@ export const visitReserveRequest = data => http.POST('/api/visitRecord/reserveRe
 
 // 删除初访记录
 export const deleteVisitRecordById = data => http.POST('/api/visitRecord/cancleRecord', data)
+
+// 获取结案报告
+export const getReportPage = data => http.POST('/api/report/getReport', data)
+
+// 下载结案报告
+export const downloadReport = data => http.POST('/api/file/downloadReport', data)
