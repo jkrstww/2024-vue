@@ -23,10 +23,6 @@ export const getVisitRecordsPage = data => http.POST('/api/visitRecord/getMyList
 // 学生按学号分页获取自己的已批准的预约记录
 export const getVisitRecordsApprovedPage = data => http.POST('/api/visitRecord/getMyApprovedList', data)
 
-export const pageVisitList = data => http.GET('/api/visitRecord/visitPageList', data)
-
-export const updateVisit = data => http.POST('/api/visitRecord/updateById', data)
-
 // 学生预约申请
 export const visitReserveRequest = data => http.POST('/api/visitRecord/reserveRequest', data)
 
@@ -38,3 +34,14 @@ export const getReportPage = data => http.POST('/api/report/getReport', data)
 
 // 下载结案报告
 export const downloadReport = data => http.POST('/api/file/downloadReport', data)
+
+// 分页查询初访结果
+export const pageVisitList = data => http.GET('/api/visitRecord/visitPageList', data)
+
+export const updateVisit = data => http.POST('/api/visitRecord/updateById', data)
+// 分页查询咨询申请
+export const pageConsultList = data => http.GET('/api/consultRequest/consultPageList', data)
+
+export const updateConsult = data => http.POST('/api/consultRequest/updateById', data)
+
+export const pageVisitRequestList = data => http.GET('/api/visitRequest/visitRequestPageList', data)

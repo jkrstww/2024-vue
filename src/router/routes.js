@@ -107,6 +107,46 @@ const mainPage = [
           )
       },
       {
+        path: 'consultation/appointmentReview',
+        name: 'appointmentReview',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/consultation/AppointmentReview.vue'
+          )
+      },
+      {
+        path: 'consultation/arrangementRecord',
+        name: 'arrangementRecord',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/consultation/ArrangementRecord.vue'
+          )
+      },
+      {
+        path: 'consultation/additional',
+        name: 'additional',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/consultation/Additional.vue'
+          )
+      },
+      {
+        path: 'consultation/finalReport',
+        name: 'finalReport',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/consultation/FinalReport.vue'
+          )
+      },
+      {
+        path: 'consultation/record',
+        name: 'record',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/consultation/Record.vue'
+          )
+      },
+      {
         path: 'whiteList',
         name: 'whiteList',
         component: () =>

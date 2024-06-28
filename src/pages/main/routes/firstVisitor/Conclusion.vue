@@ -41,8 +41,7 @@
       </el-form>
       <el-table
           :data="students"
-          style="width: 100%"
-          height="700">
+          style="width: 100%">
         <el-table-column
             prop="sn"
             label="学号"

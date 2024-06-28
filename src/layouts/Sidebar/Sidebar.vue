@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="sidebar-logo" class="sidebar-logo" :style="{backgroundColor: theme === 'light' ? '#ffffff' : '#1f2c35'}">
+    <div id="sidebar-logo" class="sidebar-logo" :style="{backgroundColor: theme === 'light' ? '#ffffff' : '#2AB1C2'}">
       <div class="sidebar-logo-png">
       <img :src="logo.src" :alt="logo.alt" />
       </div>
