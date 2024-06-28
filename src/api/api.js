@@ -17,8 +17,18 @@ export const addUser = data => http.POST('/api/whitelistSetting/add', data)
 
 export const getVisitRecords = data => http.POST('/api/visitRecord/getMyList', data)
 
+// 学生按学号分页获取自己的预约记录
 export const getVisitRecordsPage = data => http.POST('/api/visitRecord/getMyList', data)
+
+// 学生按学号分页获取自己的已批准的预约记录
+export const getVisitRecordsApprovedPage = data => http.POST('/api/visitRecord/getMyApprovedList', data)
 
 export const pageVisitList = data => http.GET('/api/visitRecord/visitPageList', data)
 
 export const updateVisit = data => http.POST('/api/visitRecord/updateById', data)
+
+// 学生预约申请
+export const visitReserveRequest = data => http.POST('/api/visitRecord/reserveRequest', data)
+
+// 删除初访记录
+export const deleteVisitRecordById = data => http.POST('/api/visitRecord/cancleRecord', data)

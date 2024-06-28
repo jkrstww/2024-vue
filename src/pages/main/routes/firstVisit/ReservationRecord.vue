@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import {getVisitRecordsPage} from '@api/api'
+import {getVisitRecordsApprovedPage} from '@api/api'
 export default {
   name: 'dutyManage',
   data () {
@@ -90,11 +90,10 @@ export default {
   },
   methods: {
     getList () {
-      getVisitRecordsPage({
+      getVisitRecordsApprovedPage({
         pageNo: this.pageNo,
         pageSize: this.pageSize
       }).then(res => {
-        console.log(res)
         this.tableData = res.data.records
         this.totals = res.data.total
       })

@@ -187,61 +187,82 @@
 <!--        </el-form-item>-->
 <!--      </el-form>-->
 
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="活动名称" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域" prop="region">
-          <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="活动时间" required>
-          <el-col :span="11">
-            <el-form-item prop="date1">
-              <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col class="line" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-form-item prop="date2">
-              <el-time-picker placeholder="选择时间" v-model="ruleForm.date2" style="width: 100%;"></el-time-picker>
-            </el-form-item>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="即时配送" prop="delivery">
-          <el-switch v-model="ruleForm.delivery"></el-switch>
-        </el-form-item>
-        <el-form-item label="活动性质" prop="type">
-          <el-checkbox-group v-model="ruleForm.type">
-            <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-            <el-checkbox label="地推活动" name="type"></el-checkbox>
-            <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-            <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="特殊资源" prop="resource">
-          <el-radio-group v-model="ruleForm.resource">
-            <el-radio label="线上品牌商赞助"></el-radio>
-            <el-radio label="线下场地免费"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="活动形式" prop="desc">
-          <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
+        <el-form :inline="true" class="demo-form-inline">
+          <el-form-item label="审批人">
+            <el-input  placeholder="审批人"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+
+          <el-button type="primary" @click="visitReserve">预约</el-button>
+          <VisitRequestDialog ref="visitRequestDialog"></VisitRequestDialog>
+        </el-form>
+
+        <el-table
+            :data="tableData"
+            style="width: 100%">
+          <el-table-column
+              prop="id"
+              label="序号"
+              width="240">
+          </el-table-column>
+          <el-table-column
+              prop="createdTime"
+              label="时间"
+              width="240">
+          </el-table-column>
+          <el-table-column
+              prop="status"
+              label="状态"
+              width="240">
+          </el-table-column>
+          <el-table-column
+              label="操作">
+            <template slot-scope="scope">
+              <el-button
+                  v-if="scope.row.status == '已批准'"
+                  size="mini"
+                  @click="handleView(scope.row)">查看详情</el-button>
+              <el-button
+                  v-else
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.row)">撤销预约</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <el-pagination
+            background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNo"
+            :page-sizes="[10]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+        </el-pagination>
       </el-card>
+
+      <VisitRecordViewDialog ref="visitRecordViewDialog" :infos="infos"></VisitRecordViewDialog>
     </div>
 </template>
 
 <script>
+import VisitRequestDialog from '../../components/firstVisit/VisitRequestDialog.vue'
+import FirstVisitEditDialog from '../../components/firstVisit/FirstVisitEditDialog.vue'
+import VisitRecordViewDialog from '../../components/firstVisit/VisitRecordViewDialog.vue'
+import {getVisitRecordsPage, visitReserveRequest, deleteVisitRecordById} from '@api/api'
+
 export default {
   name: 'appointment',
+  components: {
+    VisitRequestDialog,
+    FirstVisitEditDialog,
+    VisitRecordViewDialog
+  },
   data () {
     return {
       dialogVisible: true,
@@ -262,11 +283,12 @@ export default {
       answers: Array(10).fill('否'),
       score: 0,
       dangerLevel: 'safe',
-      visitRequest: {
-        visitTime: '',
-        sn: '',
-        isDanger: false
-      }
+      isDanger: 0,
+      tableData: [],
+      pageNo: 1,
+      pageSize: 10,
+      total: 0,
+      infos: []
     }
   },
   methods: {
@@ -278,10 +300,65 @@ export default {
       this.score = this.answers.filter(answer => answer === '是').length * 10
       if (this.answers[0] === '是' || this.answers[1] === '是' || this.score >= 60) {
         this.dangerLevel = 'danger'
+        this.isDanger = 1
       } else {
         this.dangerLevel = 'safe'
+        this.isDanger = 0
       }
+    },
+    visitReserve () {
+      this.$refs.visitRequestDialog.show()
+      visitReserveRequest({
+        'isDanger': this.isDanger
+      }).then(res => {
+        console.log(res)
+      })
+    },
+    showRequestDialog () {
+      this.$refs.visitRequestDialog.show()
+    },
+    getList () {
+      getVisitRecordsPage({
+        'pageNo': this.pageNo,
+        'pageSize': this.pageSize
+      }).then(res => {
+        this.tableData = res.data.records
+        this.total = res.data.total
+      })
+    },
+    handleCurrentChange (value) {
+      this.pageNo = value
+      this.getList()
+    },
+    handleView (info) {
+      this.infos[0] = info
+      this.$refs.visitRecordViewDialog.show()
+    },
+    handleDelete (info) {
+      console.log(info)
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteVisitRecordById({
+          'id': info.id
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.getList()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
+  },
+  created () {
+    this.getList()
   }
 }
 </script>
