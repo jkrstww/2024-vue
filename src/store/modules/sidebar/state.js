@@ -29,24 +29,24 @@ export default {
           ]
         },
         {
-          path: '/main/second',
+          path: '/main/consultation',
           icon: 'el-icon-s-custom',
           title: '咨询',
           group: 'third',
           children: [
             {
-              path: '/main/second/second',
+              path: '/main/consultation/appointment',
               icon: 'el-icon-circle-check',
               title: '咨询预约'
             },
             {
-              path: '/main/firstVisit/record',
+              path: '/main/consultation/record',
               icon: 'el-icon-s-order',
               title: '预约记录'
             },
             {
               path: '/main/firstVisit/record',
-              icon: 'el-icon-s-order',
+              icon: 'el-icon-s-claim',
               title: '咨询结果'
             }
           ]

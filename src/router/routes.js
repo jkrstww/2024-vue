@@ -115,6 +115,14 @@ const mainPage = [
           )
       },
       {
+        path: 'consultation/appointment',
+        name: 'appointment',
+        component: () =>
+          import(
+            /* webpackChunkName: "First" */ '../pages/main/routes/consultation/Appointment.vue'
+          )
+      },
+      {
         path: 'consultation/arrangementRecord',
         name: 'arrangementRecord',
         component: () =>

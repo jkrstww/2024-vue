@@ -6,7 +6,7 @@
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/main/first' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/main/firstVisit/review' }">初访管理</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/main/firstVisit/record' }">初审预约记录</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/main/firstVisit/record' }">初访预约记录</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </el-card>

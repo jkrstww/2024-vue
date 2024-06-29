@@ -8,7 +8,7 @@
           width="30%">
         <el-form ref="form" label-width="80px">
           <el-form-item label="初访老师">
-            <el-select v-model="form.selectedVisitTeacher" placeholder="请选择咨询老师">
+            <el-select v-model="form.selectedVisitTeacher" placeholder="请选择初访老师">
               <!-- 展示在“值班状态”的老师--><!--绑定v-model希望显示的是一个字符串，但此时form.name是一个数组，所以需要重新设置一个变量selectedTeacher来绑定-->
               <el-option
                   v-for="(teacher, index) in form.name"
@@ -18,8 +18,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="咨询时间">
-            <el-select v-model="form.selectedWorkDay" placeholder="请选择咨询时间" @change="handleWorkDayChange">
+          <el-form-item label="初访时间">
+            <el-select v-model="form.selectedWorkDay" placeholder="请选择初访时间" @change="handleWorkDayChange">
               <el-option
                   v-for="(day, index) in form.workDay"
                   :key="index"
@@ -28,8 +28,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="咨询时段">
-            <el-select v-model="form.period" placeholder="请选择咨询时段">
+          <el-form-item label="初访时段">
+            <el-select v-model="form.period" placeholder="请选择初访时段">
               <el-option label="早班一" :value="1"></el-option>
               <el-option label="早班二" :value="2"></el-option>
               <el-option label="早班三" :value="3"></el-option>
@@ -38,8 +38,8 @@
               <el-option label="午班三" :value="6"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="咨询地点">
-            <el-select v-model="form.workplace" placeholder="请选择咨询地点">
+          <el-form-item label="初访地点">
+            <el-select v-model="form.workplace" placeholder="请选择初访地点">
               <el-option label="101" :value="1"></el-option>
               <el-option label="102" :value="2"></el-option>
               <el-option label="103" :value="3"></el-option>
