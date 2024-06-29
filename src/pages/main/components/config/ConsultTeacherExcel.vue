@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container>
-      <el-header>Header</el-header>
+      <el-header></el-header>
 
       <el-main>
         <div id="echarts" style="width: 1000px; height: 400px">sss</div>
@@ -17,28 +17,39 @@
 
 <script>
 import * as echarts from 'echarts'
+import {getConsultTimeEcharts} from '@api/api'
+
 export default {
   name: 'ConsultTeacherExcel',
   data () {
     return {
-      downloadPath: 'http://localhost:8088/api/file/downloadExcel'
+      downloadPath: 'http://localhost:8088/api/file/downloadExcel',
+      echartsData: {},
+      mychart: null,
+      option: null
     }
   },
   methods: {
     getData () {
-
+      getConsultTimeEcharts().then(res => {
+        this.echartsData = res.data
+        console.log(this.echartsData)
+        this.option.yAxis.data = this.echartsData.consultTeacher
+        this.option.series[0].data = this.echartsData.times
+        this.option.series[1].data = this.echartsData.sumTime
+        this.myChart.setOption(this.option)
+      })
     },
     downloadExcel () {
       this.$refs.downloadExcel.click()
     },
     getEcharts () {
       var chartDom = document.getElementById('echarts')
-      var myChart = echarts.init(chartDom)
-      var option
+      this.myChart = echarts.init(chartDom)
 
-      option = {
+      this.option = {
         title: {
-          text: 'World Population'
+          text: '咨询师数据汇总'
         },
         tooltip: {
           trigger: 'axis',
@@ -59,30 +70,34 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
+          data: this.echartsData.consultTeacher
         },
         series: [
           {
-            name: '2011',
+            name: '咨询次数',
             type: 'bar',
-            data: [18203, 23489, 29034, 104970, 131744, 630230]
+            data: this.echartsData.times
           },
           {
-            name: '2012',
+            name: '咨询时间',
             type: 'bar',
-            data: [19325, 23438, 31000, 121594, 134141, 681807]
+            data: this.echartsData.sumTime
           }
         ]
       }
 
-      option && myChart.setOption(option)
+      this.myChart.setOption(this.option)
     }
 
   },
-  created () {
+  async created () {
+    this.getData()
   },
   mounted () {
     this.getEcharts()
+  },
+  updated () {
+    this.getData()
   }
 }
 </script>

@@ -94,59 +94,8 @@ export default {
     },
     handleDownload (row) {
       this.downloadPath = this.download + row.id
-      this.$refs.downloadReport.click()
-      // console.log(res)
-      // var blob = new Blob([res], {
-      //   type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;chartset=utf-8'
-      // })
-      // var link = document.createElement('a')
-      // link.href = window.URL.createObjectURL(blob)
-      // link.target = '_blank'
-      // link.click()
-
-      // var blob = new Blob([res], {
-      //   type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;chartset=UTF-8'
-      // })
-      // var url = window.URL.createObjectURL(blob)
-      // var a = document.createElement('a')
-      // a.href = url
-      // // 文件名
-      // a.download = this.res.id
-      // a.click()
-
-      // var blob = new Blob([res], {
-      //   type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document;chartset=utf-8'
-      // })
-      // var link = document.createElement('a')
-      // link.href = window.URL.createObjectURL(blob)
-      // link.download = 'a.docx'
-      // link.click()
-      // this.$axios
-      //   .get('http://localhost:8088/api/file/downloadReport/?id=' + row.id, {responseType: 'blob'})// responseType应当添加
-      //   .then(res => {
-      //     // 获取文件名
-      //     const fileName = res.headers['content-disposition'].split(';')[1].split('=')[1]
-      //     const blob = new Blob([res.data])
-      //     // 创建一个a标签并设置href属性，之后模拟人为点击下载文件
-      //     let link = document.createElement('a')
-      //     link.href = window.URL.createObjectURL(blob)
-      //     link.download = fileName// 设置下载文件名
-      //     link.click()// 模拟点击
-      //     // 释放资源并删除创建的a标签
-      //     URL.revokeObjectURL(link.href)
-      //     document.body.removeChild(link)
-      //   })
-
-      // downloadReport({
-      //   'id': row.id
-      // }).then(response => response.blob())
-      //   .then(blob => {
-      //     const url = URL.createObjectURL(blob)
-      //     const link = document.createElement('a')
-      //     link.href = url
-      //     link.download = 'filename.ext'
-      //     link.click()
-      //   })
+      window.location.href = this.downloadPath
+      // this.$refs.downloadReport.click()
     }
   },
   created () {

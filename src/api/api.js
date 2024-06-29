@@ -45,3 +45,8 @@ export const pageConsultList = data => http.GET('/api/consultRequest/consultPage
 export const updateConsult = data => http.POST('/api/consultRequest/updateById', data)
 
 export const pageVisitRequestList = data => http.GET('/api/visitRequest/visitRequestPageList', data)
+
+export const updateVisitRequest = data => http.GET('/api/visitRequest/visitRequestPageList', data)
+
+// 获取咨询师咨询次数，时间的数据
+export const getConsultTimeEcharts = data => http.POST('/api/consultRecord/getConsultTimeEcharts', data)
