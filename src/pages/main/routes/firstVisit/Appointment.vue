@@ -10,6 +10,7 @@
         </el-breadcrumb>
       </div>
     </el-card>
+
     <el-dialog
         title="心理咨询知情同意书"
         :visible.sync="dialogVisible"
@@ -140,12 +141,12 @@
         <el-button type="primary" @click="nextDialog">同 意</el-button>
       </span>
     </el-dialog>
+
     <el-dialog
         title="首访登记表"
         :visible.sync="questionnaireDialogVisible"
         width="60%"
-        :close-on-click-modal="false"
-    >
+        :close-on-click-modal="false">
       <el-form ref="form" :model="form" label-width="80px">
         <div v-for="(question, index) in questions" :key="index">
           <div>{{ question }}</div>
@@ -159,9 +160,10 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="questionnaireDialogVisible = false">确 定</el-button>
-  </span>
+        <el-button type="primary" @click="questionnaireDialogVisible = false">确 定</el-button>
+      </span>
     </el-dialog>
+
     <el-card class="container">
 <!--      <el-form ref="form" :model="form" label-width="80px">-->
 <!--        <el-form-item label="日期">-->
@@ -184,13 +186,83 @@
 <!--          </el-select>-->
 <!--        </el-form-item>-->
 <!--      </el-form>-->
-    </el-card>
-  </div>
+
+        <el-form :inline="true" class="demo-form-inline">
+          <el-form-item label="审批人">
+            <el-input  placeholder="审批人"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+
+          <el-button type="primary" @click="visitReserve">预约</el-button>
+          <VisitRequestDialog ref="visitRequestDialog"></VisitRequestDialog>
+        </el-form>
+
+        <el-table
+            :data="tableData"
+            style="width: 100%">
+          <el-table-column
+              prop="id"
+              label="序号"
+              width="240">
+          </el-table-column>
+          <el-table-column
+              prop="createdTime"
+              label="时间"
+              width="240">
+          </el-table-column>
+          <el-table-column
+              prop="status"
+              label="状态"
+              width="240">
+          </el-table-column>
+          <el-table-column
+              label="操作">
+            <template slot-scope="scope">
+              <el-button
+                  v-if="scope.row.status == '已批准'"
+                  size="mini"
+                  @click="handleView(scope.row)">查看详情</el-button>
+              <el-button
+                  v-else
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.row)">撤销预约</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <el-pagination
+            background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNo"
+            :page-sizes="[10]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+        </el-pagination>
+      </el-card>
+
+      <VisitRecordViewDialog ref="visitRecordViewDialog" :infos="infos"></VisitRecordViewDialog>
+    </div>
 </template>
 
 <script>
+import VisitRequestDialog from '../../components/firstVisit/VisitRequestDialog.vue'
+import FirstVisitEditDialog from '../../components/firstVisit/FirstVisitEditDialog.vue'
+import VisitRecordViewDialog from '../../components/firstVisit/VisitRecordViewDialog.vue'
+import {getVisitRecordsPage, visitReserveRequest, deleteVisitRecordById} from '@api/api'
+
 export default {
   name: 'appointment',
+  components: {
+    VisitRequestDialog,
+    FirstVisitEditDialog,
+    VisitRecordViewDialog
+  },
   data () {
     return {
       dialogVisible: true,
@@ -210,7 +282,13 @@ export default {
         '问题10：最近一周内，我的头脑和以往一样清晰'],
       answers: Array(10).fill('否'),
       score: 0,
-      dangerLevel: 'safe'
+      dangerLevel: 'safe',
+      isDanger: 0,
+      tableData: [],
+      pageNo: 1,
+      pageSize: 10,
+      total: 0,
+      infos: []
     }
   },
   methods: {
@@ -222,10 +300,65 @@ export default {
       this.score = this.answers.filter(answer => answer === '是').length * 10
       if (this.answers[0] === '是' || this.answers[1] === '是' || this.score >= 60) {
         this.dangerLevel = 'danger'
+        this.isDanger = 1
       } else {
         this.dangerLevel = 'safe'
+        this.isDanger = 0
       }
+    },
+    visitReserve () {
+      this.$refs.visitRequestDialog.show()
+      visitReserveRequest({
+        'isDanger': this.isDanger
+      }).then(res => {
+        console.log(res)
+      })
+    },
+    showRequestDialog () {
+      this.$refs.visitRequestDialog.show()
+    },
+    getList () {
+      getVisitRecordsPage({
+        'pageNo': this.pageNo,
+        'pageSize': this.pageSize
+      }).then(res => {
+        this.tableData = res.data.records
+        this.total = res.data.total
+      })
+    },
+    handleCurrentChange (value) {
+      this.pageNo = value
+      this.getList()
+    },
+    handleView (info) {
+      this.infos[0] = info
+      this.$refs.visitRecordViewDialog.show()
+    },
+    handleDelete (info) {
+      console.log(info)
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteVisitRecordById({
+          'id': info.id
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.getList()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
+  },
+  created () {
+    this.getList()
   }
 }
 </script>
