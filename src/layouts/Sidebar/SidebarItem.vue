@@ -55,4 +55,8 @@ export default {
   // 添加样式
   background-image: linear-gradient(#2AB1C2, #2AB1C2);
 }
+/deep/.el-menu-item {
+  // 添加样式
+  background-image: linear-gradient(#2AB1C2, #2AB1C2);
+}
 </style>
