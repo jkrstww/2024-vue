@@ -59,7 +59,13 @@
             label="时间"
             width="180">
         </el-table-column>
+        <el-table-column>
+          <template slot-scope="scope">
+            <el-button type="primary" @click="showUpdateDialog(scope.row)">修改</el-button>
+          </template>
+        </el-table-column>
       </el-table>
+      <UpdateVisitRecordDialog ref="updateVisitRecordDialog"></UpdateVisitRecordDialog>
 
       <el-pagination
           background
@@ -76,23 +82,26 @@
 </template>
 
 <script>
-import {getVisitRecordsApprovedPage} from '@api/api'
+import {getAwaitUpdateVisitRecords} from '@api/api'
+import UpdateVisitRecordDialog from '../../components/firstVisit/UpdateVisitRecordDialog.vue'
 export default {
   name: 'dutyManage',
+  components: {UpdateVisitRecordDialog},
   data () {
     return {
       title: '初访预约记录',
       tableData: [],
       totals: 0,
       pageNo: 1,
-      pageSize: 10
+      pageSize: 10,
+      selectedRow: {}
     }
   },
   methods: {
     getList () {
-      getVisitRecordsApprovedPage({
-        pageNo: this.pageNo,
-        pageSize: this.pageSize
+      getAwaitUpdateVisitRecords({
+        'pageNo': this.pageNo,
+        'pageSize': this.pageSize
       }).then(res => {
         this.tableData = res.data.records
         this.totals = res.data.total
@@ -101,6 +110,11 @@ export default {
     handleCurrentChange (value) {
       this.pageNo = value
       this.getList()
+    },
+    showUpdateDialog (row) {
+      this.selectedRow = row
+      this.$refs.updateVisitRecordDialog.show()
+      this.$refs.updateVisitRecordDialog.initForm(row)
     }
   },
   created () {

@@ -201,7 +201,7 @@ export default {
       visitReserveRequest({
         'isDanger': this.isDanger
       }).then(res => {
-        console.log(res)
+        this.getList()
       })
     },
     showRequestDialog () {

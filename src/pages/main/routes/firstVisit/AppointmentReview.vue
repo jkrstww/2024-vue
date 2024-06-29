@@ -10,6 +10,11 @@
       </div>
     </el-card>
     <el-card class="container">
+      <el-switch
+          v-model="orderByRisk"
+          active-text="危险优先"
+          @click="getList">
+      </el-switch>
       <el-table
           :data="appointment"
           style="width: 100%">
@@ -54,7 +59,7 @@
 </template>
 
 <script>
-import {pageVisitRequestList} from '@api/api'
+import {pageVisitRequestList, getUnfinishedVisitRecordsByTime, getUnfinishedVisitRecordsByRisk} from '@api/api'
 import AppointmentEditDialog from '@/pages/main/components/firstVisit/AppointmentEditDialog'
 
 export default {
@@ -64,6 +69,7 @@ export default {
   },
   data () {
     return {
+      orderByRisk: false,
       appointment: [],
       pageNo: 1,
       pageSize: 10,
@@ -72,6 +78,31 @@ export default {
     }
   },
   methods: {
+    getVisitRecordsByTime () {
+      getUnfinishedVisitRecordsByTime({
+        'pageNo': this.pageNo,
+        'pageSize': this.pageSize
+      }).then(res => {
+        this.totals = res.data.total
+        this.appointment = res.data.records
+      })
+    },
+    getVisitRecordsByRisk () {
+      getUnfinishedVisitRecordsByRisk({
+        'pageNo': this.pageNo,
+        'pageSize': this.pageSize
+      }).then(res => {
+        this.totals = res.data.total
+        this.appointment = res.data.records
+      })
+    },
+    getList () {
+      if (this.orderByRisk === false) {
+        this.getVisitRecordsByTime()
+      } else {
+        this.getVisitRecordsByRisk()
+      }
+    },
     getVisitAppointments () {
       let obj = {
         pageNo: this.pageNo,
@@ -87,18 +118,21 @@ export default {
     },
     handleSizeChange (val) {
       this.pageSize = val
-      this.getVisitAppointments()
+      this.getList()
+      // this.getVisitAppointments()
     },
     handleCurrentChange (val) {
       this.pageNo = val
-      this.getVisitAppointments()
+      this.getList()
+      // this.getVisitAppointments()
     },
     appointmentEdit (appointment) {
       this.$refs.appointmentEdit.show(appointment)
     }
   },
   created () {
-    this.getVisitAppointments()
+    this.getList()
+    // this.getVisitAppointments()
   }
 }
 </script>

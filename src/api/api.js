@@ -50,3 +50,12 @@ export const updateVisitRequest = data => http.GET('/api/visitRequest/visitReque
 
 // 获取咨询师咨询次数，时间的数据
 export const getConsultTimeEcharts = data => http.POST('/api/consultRecord/getConsultTimeEcharts', data)
+
+// 根据时间获取未完成的预约记录
+export const getUnfinishedVisitRecordsByTime = data => http.POST('/api/visitRecord/getUnfinishedVisitRecordsByTime', data)
+
+// 根据风险获取未完成的预约记录
+export const getUnfinishedVisitRecordsByRisk = data => http.POST('/api/visitRecord/getUnfinishedVisitRecordsByRisk', data)
+
+// 获取已批准的未完成（可修改）的预约记录
+export const getAwaitUpdateVisitRecords = data => http.POST('/api/visitRecord/getAwaitUpdateVisitRecords', data)
