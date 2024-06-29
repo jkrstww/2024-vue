@@ -112,7 +112,7 @@ export default {
     submit () {
       if (!this.form.selectedVisitTeacher || !this.form.selectedWorkDay || !this.form.workplace || !this.form.period) {
         this.$message({
-          message: '请填写所有的字段',
+          message: '请填写所有的内容',
           type: 'warning'
         })
         return

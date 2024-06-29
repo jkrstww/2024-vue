@@ -1,4 +1,3 @@
-<!--基本信息配置-->
 <template>
   <div>
     <el-card class="crumbs-card">
@@ -21,17 +20,11 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click = "getStudents" icon="el-icon-search">查询</el-button>
-            <el-button type="info" @click = "showAddUserDialog" icon="el-icon-upload" style="margin-left: 725px">添加</el-button>
           </el-form-item>
         </el-form>
         <el-table
             :data="students"
-            style="width: 100%"
-            height="700">
-          <el-table-column
-              type="selection"
-              width="55">
-          </el-table-column>
+            style="width: 100%">
           <el-table-column
               prop="sn"
               label="学号"
@@ -77,17 +70,17 @@
             <el-input v-model="name" placeholder="姓名"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click = "getCounselors">查询</el-button>
+            <el-button type="primary" @click = "getCounselors" icon="el-icon-search">查询</el-button>
+            <el-button type="info" @click = "showAddUserDialog" icon="el-icon-upload">添加</el-button>
           </el-form-item>
         </el-form>
-        <el-table-column
-            type="selection"
-            width="55">
-        </el-table-column>
         <el-table
             :data="counselors"
-            style="width: 100%"
-            height="700">
+            style="width: 100%">
+          <el-table-column
+              type="selection"
+              width="55">
+          </el-table-column>
           <el-table-column
               prop="sn"
               label="工号"
@@ -126,13 +119,13 @@
             <el-input v-model="name" placeholder="姓名"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click = "getFirstVisitors">查询</el-button>
+            <el-button type="primary" @click = "getFirstVisitors" icon="el-icon-search">查询</el-button>
+            <el-button type="info" @click = "showAddUserDialog" icon="el-icon-upload">添加</el-button>
           </el-form-item>
         </el-form>
         <el-table
             :data="firstVisitors"
-            style="width: 100%"
-            height="700">
+            style="width: 100%">
           <el-table-column
               type="selection"
               width="55">

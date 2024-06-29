@@ -5,16 +5,16 @@ export default {
       main: ['*']
     },
     2: {
-      main: ['*']
+      main: ['first', 'dutyManage', 'timeConfig', 'basicInfo', 'statistic', 'review', 'visitRecord']
     },
     3: {
-      main: ['*']
+      main: ['first', 'firstVisitor']
     },
     4: {
-      main: ['*']
+      main: ['first', 'additional', 'finalReport', 'record']
     },
     5: {
-      main: ['*']
+      main: ['appointmentReview', 'arrangementRecord', 'first']
     }
   }
 }

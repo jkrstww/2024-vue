@@ -3,68 +3,46 @@
     <el-card class="crumbs-card">
       <div class="crumbs">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/main/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/main/first' }">一级菜单1</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/main/first' }">首页</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </el-card>
-    <el-card class="container">
-      <el-tabs v-model="activeName"
-               @tab-click="handleClick">
-        <el-tab-pane v-for="(item,index) in schoolList"
-                     :key="index"
-                     :label="item.name"
-                     :name="item.id"
-                     style="margin:0px">
-          <el-row style="border-bottom:1px solid black">
-            <el-col :span="12" style="border-right:1px solid black">
-              <el-row>
-                <p style="border-left:5px solid blue;padding-left:5px;font-size:20px">状态类型</p>
-              </el-row>
-              <el-row>
-                <el-col style="margin-top:20px">正常打卡时间段：</el-col>
-                <el-col style="margin-top:20px">晚归打卡时间段：</el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="12" style="padding-left:30px">
-              <p style="border-left:5px solid blue;padding-left:5px;font-size:20px">系统规则说明</p>
-              <p style="padding-left:5px">学生当天有考勤：超过当天24：00打卡的学生自动视为(未归且缺卡)；
-                若学生第二天有/无考勤，则24：00至8：00学生打卡状态为(未归)，过8：00之后学生
-                打卡状态为（未到时间），直至正常打卡时间段开始；</p>
-            </el-col>
-
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
-    </el-card>
+    <div class="background-image">
+      <div class="centered-content">
+        <b>欢迎来到</b><br>四川大学心理咨询平台
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'second',
+  name: 'firstPage',
   data () {
     return {
-      activeName: '1',
-      schoolList: [
-        {
-          name: 'A学院',
-          id: 0
-        },
-        {
-          name: 'B学院',
-          id: 1
-        }, {
-          name: 'C学院',
-          id: 2
-        }
-      ]
+      title: '逸一时误一世'
     }
   },
   methods: {
-    haha (key) {
-      alert(key)
-    }
   }
 }
 </script>
+
+<style scoped>
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  color: white;
+  text-align: center;
+  padding-top: 7vh;
+  font-size: 3em;
+}
+.background-image {
+  background: url('../../../../assets/images/second.png') no-repeat center center;
+  background-size: auto;
+  height: 87vh;
+}
+</style>

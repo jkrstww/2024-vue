@@ -60,7 +60,7 @@ const mainPage = [
       },
       {
         path: 'config/statistic',
-        name: 'Statistic',
+        name: 'statistic',
         component: () =>
           import(
             /* webpackChunkName: "First" */ '../pages/main/routes/config/Statistic.vue'
@@ -76,7 +76,7 @@ const mainPage = [
       },
       {
         path: 'firstVisit/record',
-        name: 'record',
+        name: 'visitRecord',
         component: () =>
           import(
             /* webpackChunkName: "First" */ '../pages/main/routes/firstVisit/ReservationRecord.vue'
