@@ -9,6 +9,7 @@
         </el-breadcrumb>
       </div>
     </el-card>
+
     <el-tabs style="margin-left: 20px">
       <el-tab-pane label="学生管理" name="first">
         <el-form :inline="true" class="demo-form-inline" style="margin-top: 20px;margin-left: 20px">
@@ -22,6 +23,7 @@
             <el-button type="primary" @click = "getStudents" icon="el-icon-search">查询</el-button>
           </el-form-item>
         </el-form>
+
         <el-table
             :data="students"
             style="width: 100%">
@@ -61,6 +63,7 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
+
       <el-tab-pane label="咨询师管理" name="second">
         <el-form :inline="true" class="demo-form-inline" style="margin-top: 20px;margin-left: 20px">
           <el-form-item label="工号">
@@ -74,6 +77,7 @@
             <el-button type="info" @click = "showAddUserDialog" icon="el-icon-upload">添加</el-button>
           </el-form-item>
         </el-form>
+
         <el-table
             :data="counselors"
             style="width: 100%">
@@ -110,6 +114,7 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
+
       <el-tab-pane label="初访员管理" name="third">
         <el-form :inline="true" class="demo-form-inline" style="margin-top: 20px;margin-left: 20px">
           <el-form-item label="工号">
@@ -123,6 +128,7 @@
             <el-button type="info" @click = "showAddUserDialog" icon="el-icon-upload">添加</el-button>
           </el-form-item>
         </el-form>
+
         <el-table
             :data="firstVisitors"
             style="width: 100%">
@@ -161,13 +167,13 @@
       </el-tab-pane>
     </el-tabs>
     <UserEditDialog @ok="getUsers" ref="userEdit"></UserEditDialog>
-    <AddUserDialog @ok="getStudents" ref="addUser"></AddUserDialog>
+    <AddUserDialog @ok="getUsers" ref="addUser"></AddUserDialog>
   </div>
 </template>
 
 <script>
 import UserEditDialog from '@/pages/main/components/whiteList/UserEditDialog'
-import {pageUserList} from '@api/api'
+import {getUserList, queryUserList, deleteById} from '@api/api'
 import AddUserDialog from '@/pages/main/components/config/AddUserDialog.vue'
 export default {
   name: 'basicInfoMaintain',
@@ -183,8 +189,8 @@ export default {
       firstVisitors: [],
       activeTab: 'first',
       searchedUser: null,
-      sn: '',
-      name: ''
+      sn: null,
+      name: null
     }
   },
   methods: {
@@ -193,8 +199,8 @@ export default {
         sn: this.sn,
         name: this.name
       }
-      pageUserList(obj).then(res => {
-        this.students = res.data.records.filter(user => user.roleId === 1)
+      queryUserList(obj).then(res => {
+        this.students = res.data.filter(user => user.roleId === 1)
       })
     },
     getCounselors () {
@@ -202,8 +208,8 @@ export default {
         sn: this.sn,
         name: this.name
       }
-      pageUserList(obj).then(res => {
-        this.counselors = res.data.records.filter(user => user.roleId === 4)
+      queryUserList(obj).then(res => {
+        this.counselors = res.data.filter(user => user.roleId === 4)
       })
     },
     getFirstVisitors () {
@@ -211,8 +217,8 @@ export default {
         sn: this.sn,
         name: this.name
       }
-      pageUserList(obj).then(res => {
-        this.firstVisitors = res.data.records.filter(user => user.roleId === 3)
+      queryUserList(obj).then(res => {
+        this.firstVisitors = res.data.filter(user => user.roleId === 3)
       })
     },
     showUser (user) {
@@ -220,13 +226,26 @@ export default {
     },
     showAddUserDialog () {
       this.$refs.addUser.show()
+    },
+    deleteById (row) {
+      deleteById(row).then(res => {
+        if (res.status === true) {
+          this.$message('成功删除')
+          this.getUsers()
+        }
+      })
+    },
+    getUsers () {
+      this.getStudents()
+      this.getFirstVisitors()
+      this.getCounselors()
     }
   },
   created () {
-    pageUserList().then(res => {
-      this.students = res.data.records.filter(user => user.roleId === 1)
-      this.counselors = res.data.records.filter(user => user.roleId === 4)
-      this.firstVisitors = res.data.records.filter(user => user.roleId === 3)
+    getUserList().then(res => {
+      this.students = res.data.filter(user => user.roleId === 1)
+      this.counselors = res.data.filter(user => user.roleId === 4)
+      this.firstVisitors = res.data.filter(user => user.roleId === 3)
     })
   }
 }

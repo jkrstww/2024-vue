@@ -116,7 +116,8 @@ export default {
         sn: '',
         password: '',
         checkPass: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        role_id: 1
       },
       rules: {
         password: [
@@ -152,14 +153,22 @@ export default {
       })
     },
     registerBtn () {
-      register(this.registerForm).then(res => {
-        if (res.data) {
-          this.$message({
-            message: '注册成功！',
-            type: 'success'
-          })
-        }
-      })
+      if (!this.registerForm.sn || !this.registerForm.password || !this.registerForm.phoneNumber) {
+        this.$message('不能为空')
+      } else if (!this.registerForm.checkPass) {
+        this.$message('密码不同')
+      } else {
+        register(this.registerForm).then(res => {
+          if (res.data) {
+            this.$message({
+              message: '注册成功！',
+              type: 'success'
+            })
+          } else {
+            this.$message('注册失败，用户已存在')
+          }
+        })
+      }
     }
   }
 }

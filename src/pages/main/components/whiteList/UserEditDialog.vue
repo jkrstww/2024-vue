@@ -6,9 +6,9 @@
             width="30%"
             >
         <el-form ref="form" label-width="80px">
-            <el-form-item label="sn">
-                <el-input v-model="form.sn"></el-input>
-            </el-form-item>
+<!--            <el-form-item label="sn">-->
+<!--                <el-input v-model="form.sn"></el-input>-->
+<!--            </el-form-item>-->
             <el-form-item label="密码">
                 <el-input v-model="form.password"></el-input>
             </el-form-item>
@@ -17,10 +17,8 @@
             </el-form-item>
             <el-form-item label="角色">
                 <el-select v-model="form.roleId" placeholder="请选择活动区域">
-                    <el-option label="学生" :value="1"></el-option>
-                    <el-option label="学校用户" :value="2"></el-option>
-                    <el-option label="学院用户" :value="3"></el-option>
-                    <el-option label="辅导员" :value="4"></el-option>
+                    <el-option label="初访员" :value="3"></el-option>
+                    <el-option label="咨询师" :value="4"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="是否启用">

@@ -15,7 +15,7 @@
               <span>{{form.roleId}}</span>
             </el-form-item>-->
       <el-form-item label="值班地点">
-        <el-select v-model="form.workplace" placeholder="值班地点">
+        <el-select v-model="form.workPlace" placeholder="值班地点">
           <el-option label="101" :value="1"></el-option>
           <el-option label="102" :value="2"></el-option>
           <el-option label="103" :value="4"></el-option>
@@ -64,10 +64,10 @@ export default {
       week: [],
       form: {
         workDay: '',
-        workPeriod: [],
+        // workPeriod: [],
         name: '',
-        workplace: '',
-        onDuty: ''
+        workPlace: '',
+        onDuty: false
       }
       /* props: { multiple: true },
       options: [{
@@ -121,7 +121,9 @@ export default {
   },
   methods: {
     show (user) {
+      this.dialogVisible = true
       this.form = JSON.parse(JSON.stringify(user))
+
       let workDayArray = this.form.workDay.split(',')
       this.week = workDayArray.map(day => {
         switch (day) {
@@ -132,7 +134,6 @@ export default {
           case '5': return '周五'
         }
       })
-      this.dialogVisible = true
     },
     submit () {
       let workDayNumber = this.week.map(day => {

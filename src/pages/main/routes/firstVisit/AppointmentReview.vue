@@ -13,7 +13,7 @@
       <el-switch
           v-model="orderByRisk"
           active-text="危险优先"
-          @click="getList">
+          @change="getList">
       </el-switch>
       <el-table
           :data="appointment"
@@ -39,7 +39,7 @@
             width="200">
           <template slot-scope="scope">
             <el-button type="success" @click="appointmentEdit(scope.row)">通过</el-button>
-            <el-button type="danger">拒绝</el-button>
+            <el-button type="danger" @click="reject(scope.row)">拒绝</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import {pageVisitRequestList, getUnfinishedVisitRecordsByTime, getUnfinishedVisitRecordsByRisk} from '@api/api'
+import {pageVisitRequestList, getUnfinishedVisitRecordsByTime, getUnfinishedVisitRecordsByRisk, rejectVisitRequest} from '@api/api'
 import AppointmentEditDialog from '@/pages/main/components/firstVisit/AppointmentEditDialog'
 
 export default {
@@ -128,6 +128,12 @@ export default {
     },
     appointmentEdit (appointment) {
       this.$refs.appointmentEdit.show(appointment)
+    },
+    reject (row) {
+      rejectVisitRequest(row).then(res => {
+        this.$message('已拒绝')
+        this.getList()
+      })
     }
   },
   created () {

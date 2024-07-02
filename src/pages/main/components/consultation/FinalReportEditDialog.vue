@@ -9,32 +9,46 @@
           width="50%">
         <!--        咨询状态，包括完成咨询、旷约、请假、脱落、结案，如来访者结束8次咨询，但仍需继续咨询，可申请经中心审批后可追加时段，咨询师可有权限在（19）字段增设“第9次咨询状态”-->
         <el-form ref="form" label-width="100px">
-          <el-form-item label="姓名">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
           <el-form-item label="学号">
-            <el-input v-model="form.sn"></el-input>
+            <el-input v-model="form.sId"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名">
+            <span>{{form.sName}}</span>
           </el-form-item>
           <el-form-item label="性别">
-            <el-select v-model="form.gender" placeholder="请选择性别">
-              <el-option label="男" :value="1"></el-option>
-              <el-option label="女" :value="2"></el-option>
-            </el-select>
+            <span v-if="form.sGender === 0">男</span>
+            <span v-if="form.sGender === 1">女</span>
           </el-form-item>
           <el-form-item label="院系">
-            <el-select v-model="form.campus" placeholder="请选择院系">
-              <el-option label="计算机学院" :value="1"></el-option>
-              <el-option label="艺术学院" :value="2"></el-option>
-              <el-option label="数学学院" :value="3"></el-option>
-              <el-option label="外国语学院" :value="4"></el-option>
-              <el-option label="经济学院" :value="5"></el-option>
-            </el-select>
+            <span>{{form.sAcademy}}</span>
           </el-form-item>
           <el-form-item label="联系方式">
-            <el-input v-model="form.phoneNumber"></el-input>
+            <span>{{form.sPhone}}</span>
           </el-form-item>
+          <el-form-item label="年龄">
+            <el-input v-model="form.age" type="number"></el-input>
+          </el-form-item>
+<!--          <el-form-item label="姓名">-->
+<!--            <el-input v-model="form.sName"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="性别">-->
+<!--            <el-select v-model="form.sGender" placeholder="请选择性别">-->
+<!--              <el-option label="男" :value="0"></el-option>-->
+<!--              <el-option label="女" :value="1"></el-option>-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="院系">-->
+<!--            <el-select v-model="form.sAcademy" placeholder="请选择院系">-->
+<!--              <el-option label="计算机学院" value="计算机学院"></el-option>-->
+<!--              <el-option label="艺术学院" value="艺术学院"></el-option>-->
+<!--              <el-option label="数学学院" value="数学学院"></el-option>-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="联系方式">-->
+<!--            <el-input v-model="form.sPhone"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="问题类型">
-            <el-select v-model="form.problemType" placeholder="请选择问题类型">
+            <el-select v-model="form.problem" placeholder="请选择问题类型">
               <el-option label="抑郁" :value="1"></el-option>
               <el-option label="焦虑" :value="2"></el-option>
               <el-option label="双相感情障碍" :value="3"></el-option>
@@ -42,9 +56,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="咨询总数">
-            <el-select v-model="form.count" placeholder="请选择次数">
-              <el-option v-for="n in 8" :key="n" :label="'第' + n + '次咨询'" :value="n"></el-option>
-            </el-select>
+            <span>{{form.times}}</span>
           </el-form-item>
           <el-form-item label="咨询效果自评">
             <el-input v-model="form.evaluation"
@@ -54,7 +66,7 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button @click="cancle">取 消</el-button>
           <el-button type="primary" @click="submit">确 定</el-button>
         </span>
       </el-dialog>
@@ -63,7 +75,8 @@
 </template>
 
 <script>
-import {updateConsult} from '@api/api' // 改为更新结案记录的接口
+import {getRecordTimes, getStudentInfoBySn} from '@api/api'
+import {generateReport} from '../../../../api/api' // 改为更新结案记录的接口
 
 export default {
   name: 'FinalReportEditDialog',
@@ -71,14 +84,15 @@ export default {
     return {
       dialogVisible: false,
       form: {
-        name: '',
-        sn: '',
-        gender: '',
-        campus: '',
-        phoneNumber: '',
-        problemType: '',
-        count: '',
-        evaluation: ''
+        sName: '',
+        sId: '',
+        sGender: null,
+        sAcademy: '',
+        sPhone: '',
+        problem: '',
+        times: 0,
+        evaluation: '',
+        age: null
       }
     }
   },
@@ -86,17 +100,63 @@ export default {
     show () {
       // console.log(this.form.name)
       this.dialogVisible = true
+      this.getTimes()
+    },
+    getTimes () {
+
     },
     submit () {
-      updateConsult(this.form).then(res => {
+      if (!this.form.sId || !this.form.age || !this.form.problem || !this.form.evaluation) {
         this.$message({
-          message: '操作成功',
-          type: 'success'
+          message: '输入不能为空',
+          type: 'error'
         })
-        this.dialogVisible = false
-        this.$emit('ok')
-      })
+      } else {
+        generateReport(this.form).then(res => {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+          this.cancle()
+          this.$emit('ok')
+        })
+      }
+    },
+    clearForm () {
+      this.form.sName = ''
+      this.form.sId = ''
+      this.form.sAcademy = ''
+      this.form.problem = ''
+      this.form.sGender = null
+      this.form.evaluation = ''
+      this.form.sPhone = ''
+      this.form.times = 0
+      this.age = null
+    },
+    cancle () {
       this.dialogVisible = false
+      this.clearForm()
+    }
+  },
+  watch: {
+    'form.sId': {
+      handler (newVal, oldVal) {
+        getRecordTimes({
+          sId: newVal
+        }).then(res => {
+          this.form.times = res.data
+        })
+        getStudentInfoBySn({
+          sn: newVal
+        }).then(res => {
+          this.form.sGender = res.data.gender
+          this.form.sAcademy = res.data.college
+          this.form.sName = res.data.name
+          this.form.sPhone = res.data.phoneNumber
+        })
+      },
+      immediate: true,
+      deep: true
     }
   }
 }

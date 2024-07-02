@@ -57,29 +57,30 @@ export default {
     show (user) {
       if (!user.onDuty) {
         this.$message.error('当前不在值班状态')
-        return
-      }
-      this.dialogVisible = true
-      this.tableData = [{arrangement: '早班一'},
-        {arrangement: '早班二'},
-        {arrangement: '中班一'},
-        {arrangement: '中班二'},
-        {arrangement: '中班三'}]
-      let workDayArray = user.workDay.split(',')
-      this.week = workDayArray.map(day => {
-        switch (day) {
-          case '1': return '周一'
-          case '2': return '周二'
-          case '3': return '周三'
-          case '4': return '周四'
-          case '5': return '周五'
-        }
-      })
-      for (let i = 0; i < this.dates.length; i++) {
-        let weekday = this.dates[i].split(' ')[1]
-        for (let row of this.tableData) {
-          if (this.week.includes(weekday)) {
-            row['day' + i] = '值班'
+        return false
+      } else {
+        this.dialogVisible = true
+        this.tableData = [{arrangement: '早班一'},
+          {arrangement: '早班二'},
+          {arrangement: '中班一'},
+          {arrangement: '中班二'},
+          {arrangement: '中班三'}]
+        let workDayArray = user.workDay.split(',')
+        this.week = workDayArray.map(day => {
+          switch (day) {
+            case '1': return '周一'
+            case '2': return '周二'
+            case '3': return '周三'
+            case '4': return '周四'
+            case '5': return '周五'
+          }
+        })
+        for (let i = 0; i < this.dates.length; i++) {
+          let weekday = this.dates[i].split(' ')[1]
+          for (let row of this.tableData) {
+            if (this.week.includes(weekday)) {
+              row['day' + i] = '值班'
+            }
           }
         }
       }

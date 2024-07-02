@@ -130,6 +130,11 @@ export default {
           group: 'second',
           children: [
             {
+              path: '/main/consultation/addstatus',
+              icon: 'el-icon-s-order',
+              title: '添加状态'
+            },
+            {
               path: '/main/consultation/record',
               icon: 'el-icon-s-order',
               title: '咨询记录'

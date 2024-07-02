@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import {pageUserList} from '@api/api'
+import {pageTeacherList} from '@api/api'
 import DutyEditDialog from '@/pages/main/components/config/DutyEditDialog'
 import DutyStatusDialog from '@/pages/main/components/config/DutyStatusDialog'
 
@@ -101,20 +101,25 @@ export default {
   computed: {
     role () {
       return {
-        2: '中心管理员',
-        3: '初访员'
+        // 2: '中心管理员',
+        3: '初访员',
+        4: '咨询师'
       }
     }
   },
   methods: {
     getUsers () {
       let obj = {
-        pageNo: this.pageNo,
-        pageSize: this.pageSize,
-        sn: this.sn,
-        name: this.name
+        pageDTO: {
+          pageNo: this.pageNo,
+          pageSize: this.pageSize
+        },
+        whitelistSetting: {
+          sn: this.sn,
+          name: this.name
+        }
       }
-      pageUserList(obj).then(res => {
+      pageTeacherList(obj).then(res => {
         this.users = res.data.records // 后端传回来的数据
         this.totals = res.data.total
       })
@@ -131,7 +136,7 @@ export default {
       this.$refs.userEdit.show(user)
     },
     check (user) {
-      this.$refs.userStatus.show()
+      this.$refs.userStatus.show(user)
     }
   },
   // 页面加载时调用

@@ -21,8 +21,8 @@
       </el-form-item>
       <el-form-item label="角色">
         <el-select v-model="form.roleId" placeholder="角色">
-          <el-option label="咨询师" :value="1"></el-option>
-          <el-option label="初访员" :value="2"></el-option>
+          <el-option label="咨询师" :value="4"></el-option>
+          <el-option label="初访员" :value="3"></el-option>
         </el-select>
       </el-form-item>
     </el-form>

@@ -155,6 +155,14 @@ const mainPage = [
           )
       },
       {
+        path: 'consultation/addstatus',
+        name: 'addStatus',
+        component: () =>
+          import(
+            '../pages/main/routes/consultation/AddStatus.vue'
+          )
+      },
+      {
         path: 'whiteList',
         name: 'whiteList',
         component: () =>

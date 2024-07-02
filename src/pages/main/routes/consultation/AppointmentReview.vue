@@ -13,28 +13,24 @@
     <el-card class="container">
       <el-table
           :data="appointment"
-          style="width: 100%">
+          style="width: 70%">
         <el-table-column
-            prop="sn"
+            prop="sId"
             label="学号"
-            width="180">
-        </el-table-column>
-        <el-table-column
-            prop="name"
-            label="姓名"
-            width="180">
+            width="280">
         </el-table-column>
         <el-table-column
             prop="phoneNumber"
             label="联系方式">
         </el-table-column>
         <el-table-column
-            align="center"
             header-align="center"
+            align="center"
             label="操作"
-            width="100">
+            width="200">
           <template slot-scope="scope">
             <el-button type="success" @click="appointmentEdit(scope.row)">通过</el-button>
+            <el-button type="danger" @click="reject(scope.row)">拒绝</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -54,8 +50,9 @@
 </template>
 
 <script>
-import {pageConsultList} from '@api/api'
+import {getConsultRequest} from '@api/api'
 import AppointmentEditDialog from '@/pages/main/components/consultation/AppointmentEditDialog'
+import {rejectConsult} from '../../../../api/api'
 
 export default {
   name: 'consultationAppointmentReview',
@@ -75,13 +72,10 @@ export default {
   methods: {
     getAppointments () {
       let obj = {
-        sn: this.sn,
-        name: this.name,
         pageNo: this.pageNo,
-        pageSize: this.pageSize,
-        isApproved: false
+        pageSize: this.pageSize
       }
-      pageConsultList(obj).then(res => {
+      getConsultRequest(obj).then(res => {
         this.appointment = res.data.records
         this.totals = res.data.total
       })
@@ -96,6 +90,26 @@ export default {
     },
     appointmentEdit (appointment) {
       this.$refs.appointmentEdit.show(appointment)
+    },
+    reject (row) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        rejectConsult(row).then(res => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          this.getAppointments()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   },
   created () {

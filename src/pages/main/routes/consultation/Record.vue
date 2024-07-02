@@ -20,9 +20,10 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click = "getRecord" icon="el-icon-search">查询</el-button>
-          <el-button type="info" @click = "recordEdit" icon="el-icon-upload">添加</el-button>
+<!--          <el-button type="info" @click = "recordEdit" icon="el-icon-upload">添加</el-button>-->
         </el-form-item>
       </el-form>
+
       <el-table
           :data="consultation"
           style="width: 100%">
@@ -38,19 +39,27 @@
             label="姓名">
         </el-table-column>
         <el-table-column
-            prop="reportId"
-            label="咨询次数">
+            prop="location"
+            label="地点">
+        </el-table-column>
+        <el-table-column
+            prop="time"
+            label="时间">
+        </el-table-column>
+        <el-table-column
+            prop="phone"
+            label="联系方式">
         </el-table-column>
         <el-table-column
             prop="status"
             label="咨询状态">
-          <template slot-scope="scope">
-            <span v-if="scope.row.status === 1">完成咨询</span>
-            <span v-else-if="scope.row.status === 2">旷约</span>
-            <span v-else-if="scope.row.status === 3">请假</span>
-            <span v-else-if="scope.row.status === 4">脱落</span>
-            <span v-else-if="scope.row.status === 5">结案</span>
-          </template>
+<!--          <template slot-scope="scope">-->
+<!--            <span v-if="scope.row.status === 1">完成咨询</span>-->
+<!--            <span v-else-if="scope.row.status === 2">旷约</span>-->
+<!--            <span v-else-if="scope.row.status === 3">请假</span>-->
+<!--            <span v-else-if="scope.row.status === 4">脱落</span>-->
+<!--            <span v-else-if="scope.row.status === 5">结案</span>-->
+<!--          </template>-->
         </el-table-column>
       </el-table>
     </el-card>
@@ -70,7 +79,7 @@
 
 <script>
 import AddRecordDialog from '@/pages/main/components/consultation/AddRecordDialog'
-import {pageConsultList} from '@api/api' // 改为获取咨询记录的接口
+import {consultantQueryRecord} from '@api/api' // 改为获取咨询记录的接口
 export default {
   name: 'consultationRecord',
   components: {
@@ -83,7 +92,7 @@ export default {
       name: '',
       pageNo: 1,
       pageSize: 10,
-      total: 0
+      totals: 0
     }
   },
   methods: {
@@ -94,9 +103,9 @@ export default {
         pageNo: this.pageNo,
         pageSize: this.pageSize
       }
-      pageConsultList(obj).then(res => {
-        this.consultation = res.data
-        this.total = res.total
+      consultantQueryRecord(obj).then(res => {
+        this.consultation = res.data.records
+        this.totals = res.data.total
       })
     },
     handleSizeChange (val) {

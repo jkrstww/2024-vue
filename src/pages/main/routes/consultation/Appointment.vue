@@ -12,15 +12,15 @@
     </el-card>
     <el-card class="container">
       <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="预约状态">
-          <el-input  placeholder="预约状态"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="预约状态">-->
+<!--          <el-input  placeholder="预约状态"></el-input>-->
+<!--        </el-form-item>-->
 
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
-        </el-form-item>
+<!--        <el-form-item>-->
+<!--          <el-button type="primary" @click="onSubmit">查询</el-button>-->
+<!--        </el-form-item>-->
 
-        <el-button type="primary" @click="visitReserve">预约</el-button>
+        <el-button type="primary" @click="visitReserve" style="width: 200px; margin-left: 300px; margin-bottom: 25px">预约</el-button>
         <VisitRequestDialog ref="visitRequestDialog"></VisitRequestDialog>
       </el-form>
 
@@ -28,17 +28,12 @@
           :data="tableData"
           style="width: 100%">
         <el-table-column
-            prop="id"
-            label="序号"
-            width="240">
-        </el-table-column>
-        <el-table-column
             prop="createdTime"
             label="时间"
             width="240">
         </el-table-column>
         <el-table-column
-            prop="status"
+            prop="approvedStatus"
             label="状态"
             width="240">
         </el-table-column>
@@ -46,17 +41,24 @@
             label="操作">
           <template slot-scope="scope">
             <el-button
-                v-if="scope.row.status == '已批准'"
+                v-if="scope.row.approvedStatus == '已批准'"
                 size="mini"
                 @click="handleView(scope.row)">查看详情</el-button>
             <el-button
-                v-else
+                v-else-if="scope.row.approvedStatus == '待批准'"
                 size="mini"
                 type="danger"
                 @click="handleDelete(scope.row)">撤销预约</el-button>
+            <el-button
+                v-else-if="scope.row.approvedStatus == '已拒绝'"
+                size="mini"
+                type="warning"
+                @click="handleDelete(scope.row)">删除记录</el-button>
           </template>
         </el-table-column>
       </el-table>
+
+      <ConsultRecordViewDialog ref="consultRecordViewDialog"></ConsultRecordViewDialog>
 
       <el-pagination
           background
@@ -73,8 +75,11 @@
 </template>
 
 <script>
+import {deleteConsultRecordById, getConsultRecordsPage, consultRequest} from '@api/api'
+import ConsultRecordViewDialog from '../../components/consultation/consultRecordViewDialog.vue'
 export default {
   name: 'appointment',
+  components: {ConsultRecordViewDialog},
   data () {
     return {
       dialogVisible: true,
@@ -94,10 +99,24 @@ export default {
         '问题10：最近一周内，我的头脑和以往一样清晰'],
       answers: Array(10).fill('否'),
       score: 0,
-      dangerLevel: 'safe'
+      dangerLevel: 'safe',
+      pageNo: 1,
+      pageSize: 10,
+      tableData: [],
+      total: 0
     }
   },
   methods: {
+    getList () {
+      getConsultRecordsPage({
+        'pageNo': this.pageNo,
+        'pageSize': this.pageSize
+      }).then(res => {
+        this.tableData = res.data.records
+        this.total = res.data.total
+      })
+    },
+
     nextDialog () {
       this.dialogVisible = false
       this.questionnaireDialogVisible = true
@@ -109,7 +128,45 @@ export default {
       } else {
         this.dangerLevel = 'safe'
       }
+    },
+    handleView (row) {
+      this.$refs.consultRecordViewDialog.show(row)
+    },
+    handleDelete (info) {
+      console.log(info)
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteConsultRecordById({
+          'id': info.id
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.getList()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    handleCurrentChange (value) {
+      this.pageNo = value
+      this.getList()
+    },
+    visitReserve () {
+      consultRequest().then(res => {
+        this.$message('预约成功')
+        this.getList()
+      })
     }
+  },
+  created () {
+    this.getList()
   }
 }
 </script>

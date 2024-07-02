@@ -15,38 +15,31 @@
         <el-form-item label="学号">
           <el-input v-model="sn" placeholder="学号"></el-input>
         </el-form-item>
-        <el-form-item label="姓名">
-          <el-input v-model="name" placeholder="姓名"></el-input>
-        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click = "getRecord">查询</el-button>
+          <el-button type="primary" @click = "getList">查询</el-button>
           <el-button type="info" @click = "addArrangement" icon="el-icon-upload">添加</el-button>
         </el-form-item>
       </el-form>
       <el-table
-          :data="consultation"
+          :data="arrangementRecord"
           style="width: 100%">
         <el-table-column
             width="55">
         </el-table-column>
         <el-table-column
-            prop="sn"
+            prop="sId"
             label="学号">
         </el-table-column>
         <el-table-column
-            prop="name"
-            label="姓名">
-        </el-table-column>
-        <el-table-column
-            prop="counselor"
+            prop="consultTeacher"
             label="咨询师">
         </el-table-column>
         <el-table-column
-            prop="time"
+            prop="consultTime"
             label="咨询时间">
         </el-table-column>
         <el-table-column
-            prop="place"
+            prop="consultLocation"
             label="咨询地点">
         </el-table-column>
         <el-table-column
@@ -54,12 +47,13 @@
             label="操作"
             width="100">
           <template slot-scope="scope">
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" size="small" @click="editAppointment(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
-    <AddArrangementDialog @ok="getRecord" ref="addArrangement"></AddArrangementDialog>
+    <AddArrangementDialog @ok="getList" ref="addArrangement"></AddArrangementDialog>
+    <AppointmentEditDialog @ok="getList" ref="appointmentEditDialog"></AppointmentEditDialog>
     <el-pagination
         background
         @size-change="handleSizeChange"
@@ -74,26 +68,52 @@
 </template>
 
 <script>
-import AddArrangementDialog from '@/pages/main/components/consultation/AddArrangementDialog'
+import {queryConsultRecord} from '@api/api'
+import AddArrangementDialog from '@/pages/main/components/consultation/AddArrangementDialog.vue'
+import AppointmentEditDialog from '../../components/consultation/AppointmentEditDialog.vue'
 export default {
-  name: 'consultationArrangementRecord',
+  name: 'ArrangementRecord',
   components: {
+    AppointmentEditDialog,
     AddArrangementDialog
   },
   data () {
     return {
       arrangementRecord: [],
       sn: '',
-      name: '',
       pageNo: 1,
       pageSize: 10,
       totals: 0
     }
   },
   methods: {
+    getList () {
+      queryConsultRecord({
+        consultRecord: {
+          sId: this.sn
+        },
+        pageDTO: {
+          pageNo: this.pageNo,
+          pageSize: this.pageSize
+        }
+      }).then(res => {
+        this.arrangementRecord = res.data.records
+        this.totals = res.data.total
+      })
+    },
     addArrangement () {
       this.$refs.addArrangement.show()
+    },
+    handleCurrentChange (value) {
+      this.pageNo = value
+      this.getList()
+    },
+    editAppointment (row) {
+      this.$refs.appointmentEditDialog.show(row)
     }
+  },
+  created () {
+    this.getList()
   }
 }
 </script>

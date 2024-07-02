@@ -1,14 +1,16 @@
 <template>
   <div>
     <el-container>
-      <el-header></el-header>
+      <el-header>
+        <p style="margin-left: 450px">咨询师数据汇总</p>
+      </el-header>
 
       <el-main>
         <div id="echarts" style="width: 1000px; height: 400px">sss</div>
       </el-main>
 
       <el-footer>
-        <el-button @click="downloadExcel">点击下载</el-button>
+        <el-button @click="downloadExcel" style="margin-left: 450px">点击下载</el-button>
         <a :href="downloadPath" ref="downloadExcel"></a>
       </el-footer>
     </el-container>
@@ -48,9 +50,7 @@ export default {
       this.myChart = echarts.init(chartDom)
 
       this.option = {
-        title: {
-          text: '咨询师数据汇总'
-        },
+        title: {},
         tooltip: {
           trigger: 'axis',
           axisPointer: {

@@ -5,7 +5,7 @@
       <div class="crumbs">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/main/first' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/main/firstVisit/appointment' }">初访管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/main/firstVisit/appointment' }">初访</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/main/firstVisit/appointment' }">初访预约</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -86,7 +86,7 @@
             <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
           </el-form-item>
 
-          <el-button type="info" @click="visitReserve" icon="el-icon-circle-check">预约</el-button>
+          <el-button type="primary" @click="visitReserve">预约</el-button>
           <VisitRequestDialog ref="visitRequestDialog"></VisitRequestDialog>
         </el-form>
 
@@ -116,10 +116,15 @@
                   size="mini"
                   @click="handleView(scope.row)">查看详情</el-button>
               <el-button
-                  v-else
+                  v-else-if="scope.row.status == '待批准'"
                   size="mini"
                   type="danger"
                   @click="handleDelete(scope.row)">撤销预约</el-button>
+              <el-button
+                  v-else-if="scope.row.status == '已拒绝'"
+                  size="mini"
+                  type="warning"
+                  @click="handleDelete(scope.row)">删除记录</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -257,9 +262,5 @@ export default {
 .radio-group{
   font-size: 20px;
   line-height: 1.8;
-}
-.consent-text {
-  font-size: 18px;
-  color: #333333;
 }
 </style>

@@ -11,7 +11,7 @@ export default {
       main: ['first', 'firstVisitor']
     },
     4: {
-      main: ['first', 'additional', 'finalReport', 'record']
+      main: ['first', 'additional', 'finalReport', 'record', 'addStatus']
     },
     5: {
       main: ['appointmentReview', 'arrangementRecord', 'first']

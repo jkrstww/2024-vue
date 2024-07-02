@@ -11,24 +11,19 @@
       </div>
     </el-card>
     <el-card class="container">
-      <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="审批人">
-          <el-input  placeholder="审批人"></el-input>
-        </el-form-item>
+<!--      <el-form :inline="true" class="demo-form-inline">-->
+<!--        <el-form-item label="审批人">-->
+<!--          <el-input  placeholder="审批人"></el-input>-->
+<!--        </el-form-item>-->
 
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
-        </el-form-item>
-      </el-form>
+<!--        <el-form-item>-->
+<!--          <el-button type="primary" @click="onSubmit">查询</el-button>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
 
       <el-table
           :data="tableData"
           style="width: 100%">
-        <el-table-column
-            prop="id"
-            label="序号"
-            width="180">
-        </el-table-column>
         <el-table-column
             prop="sid"
             label="学号"
@@ -61,11 +56,11 @@
         </el-table-column>
         <el-table-column>
           <template slot-scope="scope">
-            <el-button type="primary" @click="showUpdateDialog(scope.row)">修改</el-button>
+            <el-button type="primary" @click="showUpdateDialog(scope.row)" style="margin-left: 150px">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <UpdateVisitRecordDialog ref="updateVisitRecordDialog"></UpdateVisitRecordDialog>
+      <UpdateVisitRecordDialog @flush="getList" ref="updateVisitRecordDialog"></UpdateVisitRecordDialog>
 
       <el-pagination
           background

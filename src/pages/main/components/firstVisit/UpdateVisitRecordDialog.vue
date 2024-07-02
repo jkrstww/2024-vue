@@ -92,7 +92,7 @@ export default {
         } else {
           this.$message('修改成功')
           this.dialogVisible = false
-          this.$emit('getList')
+          this.$emit('flush')
         }
       })
     }
