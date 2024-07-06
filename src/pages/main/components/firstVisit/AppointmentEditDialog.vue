@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import {updateVisitRequest, sendNotification, queryUserList} from '@api/api' // 这里的pageUserList修改为老师的表单即可，另外需要一个接口更新咨询申请的状态
+import {updateVisitRequest, sendVisitNotification, queryUserList} from '@api/api' // 这里的pageUserList修改为老师的表单即可，另外需要一个接口更新咨询申请的状态
 export default {
   name: 'AppointmentEditDialog',
   data () {
@@ -167,8 +167,8 @@ export default {
       }
 
       this.isApproved = true
-      this.form.consultDate = this.date1
-      this.form.consultPeriod = this.date2
+      this.form.visitDate = this.date1
+      this.form.visitPeriod = this.date2
       this.form.visitTime = this.date1 + ' ' + this.date2
       this.form.status = '已批准'
       updateVisitRequest(this.form).then(res => {
@@ -182,15 +182,15 @@ export default {
           this.dialogVisible = false
           this.$emit('ok')
           let notificationData = {
-            consultTeacher: this.form.visitTeacher,
-            consultDate: this.form.consultDate,
-            consultPeriod: this.form.consultPeriod,
-            consultLocation: this.form.visitLocation,
+            visitTeacher: this.form.visitTeacher,
+            visitDate: this.form.visitDate,
+            visitPeriod: this.form.visitPeriod,
+            visitLocation: this.form.visitLocation,
             sId: this.form.sId,
             phoneNumber: this.form.phoneNumber,
             name: this.form.name
           }
-          sendNotification(notificationData).then(res => {
+          sendVisitNotification(notificationData).then(res => {
             if (res.status === true) {
               this.$message({
                 message: '通知已发送',

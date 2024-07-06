@@ -134,4 +134,6 @@ export const addConsultRecord = data => http.POST('api/consultRecord/addRecord',
 
 export const sendNotification = data => http.GET('/api/consultRecord/sendNotification', data)
 
+export const sentVisitNotification = data => http.GET('/api/visitRecord/sendVisitNotification', data)
+
 export const getMyFinishedConsultRecord = data => http.POST('/api/consultRecord/getMyFinishedPage', data)
