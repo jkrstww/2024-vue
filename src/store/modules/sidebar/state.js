@@ -181,7 +181,7 @@ export default {
   },
   sidebarTheme: {
     dark: {
-      background: '#1f2c35',
+      background: '#9E2A22',
       text: '#ffffff',
       activeText: '#ffffff'
     },

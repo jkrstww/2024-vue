@@ -263,4 +263,8 @@ export default {
   font-size: 20px;
   line-height: 1.8;
 }
+.consent-text {
+  font-size: 18px;
+  color: black;
+}
 </style>

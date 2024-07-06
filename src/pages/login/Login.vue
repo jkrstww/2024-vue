@@ -15,7 +15,7 @@
           <input id="password" v-model="loginForm.password" type="password" placeholder="请输入密码" required>
           <span class="label">密码</span>
         </div>
-        <el-link type="info">忘记密码</el-link>
+<!--        <el-link type="info">忘记密码</el-link>-->
         <button @click = "loginBtn">登录</button>
       </div>
       <div :class="active === 2 ? 'form' : 'form hidden'">
@@ -227,13 +227,13 @@ export default {
     }
 
     .title{
-      font-size: 18px;
+      font-size: 25px;
       color: rgb(246,240,255);
       letter-spacing: 1.5px;
       font-weight: 300;
     }
     .subtitle{
-      font-size: 11px;
+      font-size: 15px;
       color: rgb(246,240,255);
       letter-spacing: 1px;
       margin-bottom: 35px;
@@ -291,7 +291,7 @@ export default {
     button {
       width: 100%;
       height: 35px;
-      background: rgb(36, 217, 217);
+      background: rgb(147, 213, 220);
       border: none;
       outline: none;
       border-radius: 5px;
@@ -305,12 +305,16 @@ export default {
   }
   .card{
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     right: 0;
     top: 50%;
     transform: translate(0,-50%);
     width: 475px;
     height: 400px;
-    background: white;
+    background: whitesmoke;
     background-size: contain;
     padding: 40px;
     border-radius: 0 10px 10px 0;
@@ -328,7 +332,7 @@ export default {
       .name{
         font-weight: 300;
         span{
-          color: rgb(36, 217, 217);
+          color: rgb(147, 213, 220);
           font-weight: bold;
         }
       }
@@ -339,10 +343,10 @@ export default {
       margin-bottom: 35px;
     }
     .btn{
-      font-size: 14px;
+      font-size: 16px;
       button{
-        background: rgb(36, 217, 217);
-        font-size: 14px;
+        background: rgb(147, 213, 220);
+        font-size: 15px;
         padding: 5px 15px;
         border: none;
         outline: none;

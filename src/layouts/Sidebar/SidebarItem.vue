@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/.el-submenu .el-menu-item {
+/*/deep/.el-submenu .el-menu-item {
   // 添加样式
   background-image: linear-gradient(#2AB1C2, #2AB1C2);
 }
@@ -58,5 +58,5 @@ export default {
 /deep/.el-menu-item {
   // 添加样式
   background-image: linear-gradient(#2AB1C2, #2AB1C2);
-}
+}*/
 </style>
