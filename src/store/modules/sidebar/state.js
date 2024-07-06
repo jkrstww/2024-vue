@@ -11,7 +11,7 @@ export default {
           title: '修改个人信息'
         },
         {
-          path: '/main/second',
+          path: '/main/firstVisit',
           icon: 'el-icon-price-tag',
           title: '初访',
           group: 'second',

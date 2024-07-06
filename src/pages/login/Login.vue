@@ -87,6 +87,9 @@ export default {
       if (!value) {
         return callback(new Error('学号不能为空'))
       }
+      if (value.toString().length !== 13) {
+        return callback(new Error('请输入正确的13位学号'))
+      }
       setTimeout(() => {
         console.log(typeof value)
         if (!Number.isInteger(value)) {
@@ -99,6 +102,9 @@ export default {
     var checkPhoneNumber = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('联系方式不能为空'))
+      }
+      if (value.toString().length !== 11) {
+        return callback(new Error('请输入正确的11位手机号'))
       }
       setTimeout(() => {
         if (!Number.isInteger(value)) {
