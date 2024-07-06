@@ -156,6 +156,8 @@ export default {
 
       this.isApproved = true
       this.form.consultTime = this.date1 + ' ' + this.date2
+      this.form.consultDate = this.date1
+      this.form.consultPeriod = this.date2
       this.form.approvedStatus = '已批准'
       updateConsult(this.form).then(res => {
         if (res.status === true) {
@@ -169,10 +171,10 @@ export default {
           this.$emit('ok')
           let notificationData = {
             consultTeacher: this.form.consultTeacher,
-            consultDate: this.date1,
-            consultPeriod: this.date2,
+            consultDate: this.form.consultDate,
+            consultPeriod: this.form.consultPeriod,
             consultLocation: this.form.consultLocation,
-            sid: this.form.sid
+            sid: this.form.sId
           }
           sendNotification(notificationData).then(res => {
             if (res.status === true) {
