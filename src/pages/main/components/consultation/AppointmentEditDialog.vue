@@ -156,10 +156,6 @@ export default {
 
       this.isApproved = true
       this.form.consultTime = this.date1 + ' ' + this.date2
-      this.form.consultDate = this.date1 // 咨询日期
-      this.form.consultPeriod = this.date2 // 咨询时段
-      let formCopy = Object.assign({}, this.form) // 创建form的副本，以避免修改原始数据
-      delete formCopy.consultTime // 删除consultTime属性
       this.form.approvedStatus = '已批准'
       updateConsult(this.form).then(res => {
         if (res.status === true) {
@@ -171,7 +167,14 @@ export default {
           this.date2 = null
           this.dialogVisible = false
           this.$emit('ok')
-          sendNotification(formCopy).then(res => {
+          let notificationData = {
+            consultTeacher: this.form.consultTeacher,
+            consultDate: this.date1,
+            consultPeriod: this.date2,
+            consultLocation: this.form.consultLocation,
+            sid: this.form.sid
+          }
+          sendNotification(notificationData).then(res => {
             if (res.status === true) {
               this.$message({
                 message: '通知已发送',

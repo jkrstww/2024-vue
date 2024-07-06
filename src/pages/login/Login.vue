@@ -49,7 +49,7 @@
           <div class="name">学生<span>心理咨询</span>平台</div>
         </div>
         <div class="description">
-          test
+          欢迎来到四川大学学生心理咨询平台，我们为您提供专业的心理咨询服务，帮助您解决心理问题，提高学习和生活质量。
         </div>
         <div class="btn">
           {{ active === 1 ? '新用户 ?' : '已有账户 ?' }}
