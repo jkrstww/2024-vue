@@ -56,7 +56,7 @@
                     label="启用状态">
                 <template slot-scope="scope">
                     <el-switch
-                            :value="scope.row.enabled==1"
+                            :value="scope.row.enabled===1"
                             active-color="#13ce66"
                             inactive-color="#ff4949">
                     </el-switch>

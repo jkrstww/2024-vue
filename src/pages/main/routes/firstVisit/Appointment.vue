@@ -112,16 +112,16 @@
               label="操作">
             <template slot-scope="scope">
               <el-button
-                  v-if="scope.row.status == '已批准'"
+                  v-if="scope.row.status === '已批准'"
                   size="mini"
                   @click="handleView(scope.row)">查看详情</el-button>
               <el-button
-                  v-else-if="scope.row.status == '待批准'"
+                  v-else-if="scope.row.status === '待批准'"
                   size="mini"
                   type="danger"
                   @click="handleDelete(scope.row)">撤销预约</el-button>
               <el-button
-                  v-else-if="scope.row.status == '已拒绝'"
+                  v-else-if="scope.row.status === '已拒绝'"
                   size="mini"
                   type="warning"
                   @click="handleDelete(scope.row)">删除记录</el-button>

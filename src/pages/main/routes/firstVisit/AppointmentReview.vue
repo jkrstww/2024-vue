@@ -43,7 +43,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <AppointmentEditDialog @ok="getVisitAppointments" ref="appointmentEdit"></AppointmentEditDialog>
+      <AppointmentEditDialog @ok="getList" ref="appointmentEdit"></AppointmentEditDialog>
       <el-pagination
           background
           @size-change="handleSizeChange"
@@ -130,10 +130,25 @@ export default {
       this.$refs.appointmentEdit.show(appointment)
     },
     reject (row) {
-      rejectVisitRequest(row).then(res => {
-        this.$message('已拒绝')
-        this.getList()
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        rejectVisitRequest(row).then(res => {
+          this.$message('已拒绝')
+          this.getList()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
+      // rejectVisitRequest(row).then(res => {
+      //   this.$message('已拒绝')
+      //   this.getList()
+      // })
     }
   },
   created () {
