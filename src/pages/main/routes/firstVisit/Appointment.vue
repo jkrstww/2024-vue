@@ -45,9 +45,9 @@
             <el-radio label="否"></el-radio>
           </el-radio-group>
         </div>
-        <el-form-item label="危机等级">
+<!--        <el-form-item label="危机等级">
           <span>{{ dangerLevel }}</span>
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="questionnaireDialogVisible = false">确 定</el-button>
