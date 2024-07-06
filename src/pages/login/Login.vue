@@ -166,14 +166,24 @@ export default {
       } else if (!this.registerForm.checkPass) {
         this.$message('密码不同')
       } else {
-        register(this.registerForm).then(res => {
-          if (res.data) {
-            this.$message({
-              message: '注册成功！',
-              type: 'success'
+        this.$refs.registerForm.validate((valid) => {
+          if (valid) {
+            register(this.registerForm).then(res => {
+              if (res.data) {
+                this.$message({
+                  message: '注册成功！',
+                  type: 'success'
+                })
+              } else {
+                this.$message('注册失败，用户已存在')
+              }
             })
           } else {
-            this.$message('注册失败，用户已存在')
+            this.$message({
+              message: '请正确填写所有的字段',
+              type: 'warning'
+            })
+            return false
           }
         })
       }
