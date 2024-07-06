@@ -131,3 +131,5 @@ export const getAddRequest = data => http.POST('api/addRequest/getList', data)
 export const postAddRequest = data => http.POST('api/addRequest/addRequest', data)
 
 export const addConsultRecord = data => http.POST('api/consultRecord/addRecord', data)
+
+export const sendNotification = data => http.GET('/api/consultRecord/sendNotification', data)

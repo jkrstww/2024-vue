@@ -8,9 +8,9 @@
       </div>
     </el-card>
     <div class="background-image">
-      <div class="centered-content">
-        <b>欢迎来到</b><br>四川大学心理咨询平台
-      </div>
+<!--      <div class="centered-content">-->
+<!--        <b>欢迎来到</b><br>四川大学心理咨询平台-->
+<!--      </div>-->
     </div>
   </div>
 </template>

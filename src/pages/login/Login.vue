@@ -23,6 +23,8 @@
         <div class="subtitle">创建你的账户</div>
         <el-form :model="registerForm"
                  ref="registerForm"
+                 status-icon
+                 :rules="rules"
                  label-width="0"
                  label-position="left"
                  style="width: 100%"
@@ -67,7 +69,7 @@ export default {
         callback(new Error('请输入密码'))
       } else {
         if (this.registerForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass')
+          this.$refs.registerForm.validateField('checkPass')
         }
         callback()
       }

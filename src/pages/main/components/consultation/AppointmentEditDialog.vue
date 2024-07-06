@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import {updateConsult, queryUserList} from '@api/api' // 这里的pageUserList修改为老师的表单即可，另外需要一个接口更新咨询申请的状态
+import {updateConsult, queryUserList, sendNotification} from '@api/api' // 这里的pageUserList修改为老师的表单即可，另外需要一个接口更新咨询申请的状态
 export default {
   name: 'AppointmentEditDialog',
   data () {
@@ -156,6 +156,10 @@ export default {
 
       this.isApproved = true
       this.form.consultTime = this.date1 + ' ' + this.date2
+      this.form.consultDate = this.date1 // 咨询日期
+      this.form.consultPeriod = this.date2 // 咨询时段
+      let formCopy = Object.assign({}, this.form) // 创建form的副本，以避免修改原始数据
+      delete formCopy.consultTime // 删除consultTime属性
       this.form.approvedStatus = '已批准'
       updateConsult(this.form).then(res => {
         if (res.status === true) {
@@ -167,6 +171,19 @@ export default {
           this.date2 = null
           this.dialogVisible = false
           this.$emit('ok')
+          sendNotification(formCopy).then(res => {
+            if (res.status === true) {
+              this.$message({
+                message: '通知已发送',
+                type: 'success'
+              })
+            } else {
+              this.$message({
+                message: res.data.message,
+                type: 'warning'
+              })
+            }
+          })
         } else {
           this.$message({
             message: res.data.message,

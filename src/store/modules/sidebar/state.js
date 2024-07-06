@@ -20,12 +20,12 @@ export default {
               path: '/main/firstVisit/appointment',
               icon: 'el-icon-circle-check',
               title: '初访预约'
-            },
-            {
+            }
+            /* {
               path: '/main/firstVisit/record',
               icon: 'el-icon-s-order',
               title: '预约记录'
-            }
+            } */
           ]
         },
         {
@@ -39,11 +39,11 @@ export default {
               icon: 'el-icon-circle-check',
               title: '咨询预约'
             },
-            {
+            /* {
               path: '/main/consultation/record',
               icon: 'el-icon-s-order',
               title: '预约记录'
-            },
+            }, */
             {
               path: '/main/firstVisit/record',
               icon: 'el-icon-s-claim',
