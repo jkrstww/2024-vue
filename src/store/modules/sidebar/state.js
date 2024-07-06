@@ -38,17 +38,17 @@ export default {
               path: '/main/consultation/appointment',
               icon: 'el-icon-circle-check',
               title: '咨询预约'
-            },
+            }
             /* {
               path: '/main/consultation/record',
               icon: 'el-icon-s-order',
               title: '预约记录'
             }, */
-            {
-              path: '/main/firstVisit/record',
-              icon: 'el-icon-s-claim',
-              title: '咨询结果'
-            }
+            // {
+            //   path: '/main/firstVisit/record',
+            //   icon: 'el-icon-s-claim',
+            //   title: '咨询结果'
+            // }
           ]
         }
       ]

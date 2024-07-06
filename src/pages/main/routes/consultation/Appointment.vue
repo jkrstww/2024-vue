@@ -45,6 +45,10 @@
                 size="mini"
                 @click="handleView(scope.row)">查看详情</el-button>
             <el-button
+                v-if="scope.row.approvedStatus === '已完成'"
+                size="mini"
+                @click="handleView(scope.row)">查看详情</el-button>
+            <el-button
                 v-else-if="scope.row.approvedStatus === '待批准'"
                 size="mini"
                 type="danger"

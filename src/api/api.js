@@ -133,3 +133,5 @@ export const postAddRequest = data => http.POST('api/addRequest/addRequest', dat
 export const addConsultRecord = data => http.POST('api/consultRecord/addRecord', data)
 
 export const sendNotification = data => http.GET('/api/consultRecord/sendNotification', data)
+
+export const getMyFinishedConsultRecord = data => http.POST('/api/consultRecord/getMyFinishedPage', data)
